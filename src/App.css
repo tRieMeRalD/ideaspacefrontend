@@ -1,33 +1,51 @@
-.App {
-  text-align: center;
+.landing-bg {
+    position: relative;
+    background: url('./img/landing2.png') no-repeat;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.height-bg {
+    height: 1000px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.App-link {
-  color: #61dafb;
+.profile-img {
+    width: 100%;
+    position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.fb-profile img.fb-image-lg {
+    z-index: 0;
+    /* width: 100%; */
+    margin-bottom: 10px;
+}
+
+.fb-image-profile {
+    margin: -90px 10px 0px 50px !important;
+    z-index: 9 !important;
+    width: 20%;
+}
+
+@media (max-width:768px) {
+
+    .fb-profile-text>h1 {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .fb-image-profile {
+        margin: -45px 10px 0px 25px !important;
+        z-index: 9 !important;
+        width: 20% !important;
+        height: 20% !important;
+    }
 }
