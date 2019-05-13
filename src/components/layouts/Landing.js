@@ -34,10 +34,10 @@ class Landing extends Component {
           </h2>
           <div className="container">
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-4">
                 <img src={online} alt="" />
               </div>
-              <div className="col-6 pt-5">
+              <div className="col-md-8 pt-5">
                 <h2 className="pb-3">Create blogs at a click of a button.</h2>
                 <p className="lead">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -50,7 +50,7 @@ class Landing extends Component {
             </div>
 
             <div className="row">
-              <div className="col-6 pt-5">
+              <div className="col-md-8 pt-5">
                 <h2 className="pb-3">Accessible everywhere.</h2>
                 <p className="lead">
                   Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -59,16 +59,16 @@ class Landing extends Component {
                   deserunt mollit anim id est laborum.
                 </p>
               </div>
-              <div className="col-6">
+              <div className="col-md-4">
                 <img src={globe} alt="" />
               </div>
             </div>
 
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-4">
                 <img src={network} alt="" />
               </div>
-              <div className="col-6 pt-4">
+              <div className="col-md-8 pt-4">
                 <h2 className="pb-3">Grow your network.</h2>
                 <p className="lead">
                   Venenatis a condimentum vitae sapien pellentesque habitant
@@ -88,7 +88,39 @@ class Landing extends Component {
             </h2>
 
             <div className="row">
-              <div className="col-6">
+              <div className="col-md-8">
+                <h3 className="pb-3 text-center">
+                  Contact us through social media!
+                </h3>
+                <p className="pl-5 ml-5">
+                  {" "}
+                  <p className="lead pt-2">
+                    <i className="fas fa-envelope-open-text fa-3x pb-4 pb-2 pr-3" />{" "}
+                    horizon.william14@gmail.com
+                  </p>
+                  <br />
+                  <p className="lead">
+                    <i className="fab fa-facebook fa-3x pb-4 pr-3" /> @IdeaSpace
+                  </p>
+                  <br />
+                  <p className="lead">
+                    <i className="fab fa-twitter fa-3x pr-2" /> @IdeaSpace
+                  </p>
+                </p>
+              </div>
+
+              <div className="col-md-4 mt-3">
+                <img
+                  className="mt-5"
+                  style={{ height: "70%", width: "100%" }}
+                  src={contact}
+                  alt=""
+                />
+              </div>
+            </div>
+
+            {/* <div className="row">
+              <div className="col-6 ">
                 <h3 className="pb-3">Contact us through social media!</h3>
                 <div className="row">
                   <div className="col-2">
@@ -106,10 +138,10 @@ class Landing extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-6">
-                <img src={contact} alt="" />
+              <div className="col-6 col-md-6">
+                <img className="img-fluid" src={contact} alt="" />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
