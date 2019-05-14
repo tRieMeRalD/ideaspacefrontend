@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_POST } from "./types";
+import { GET_ERRORS, GET_POST, SET_PROFILE_ID } from "./types";
 
 // Get post
 export const getCurrentPost = id => dispatch => {
@@ -18,6 +18,13 @@ export const getCurrentPost = id => dispatch => {
         payload: {}
       })
     );
+};
+
+export const setProfileLink = profileId => {
+  return {
+    type: SET_PROFILE_ID,
+    payload: profileId
+  };
 };
 
 // Create post

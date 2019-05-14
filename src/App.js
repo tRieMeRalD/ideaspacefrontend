@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
 import Logout from "./components/Logout";
 import EditProfile from "./components/EditProfile";
+import ShowProfileID from "./components/ShowProfileID";
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -65,6 +66,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/:id" component={ShowProfileID} />
             <Route exact path="/logout" component={Logout} />
             <Footer />
           </div>

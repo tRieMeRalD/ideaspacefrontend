@@ -8,3 +8,4 @@ export const GET_POSTS = "GET_POSTS";
 export const SET_ACCOUNT_ID = "SET_ACCOUNT_ID";
 export const SET_NAME = "SET_NAME";
 export const SET_EDIT_ID = "SET_EDIT_ID";
+export const SET_PROFILE_ID = "SET_PROFILE_ID";
