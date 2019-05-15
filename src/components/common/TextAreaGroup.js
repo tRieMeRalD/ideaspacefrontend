@@ -29,6 +29,7 @@ const TextAreaGroup = ({
         value={value}
         onChange={onChange}
         type={type}
+        style={{ whiteSpace: "pre-wrap" }}
       />
     </div>
   );

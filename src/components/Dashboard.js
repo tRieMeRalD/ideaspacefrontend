@@ -51,6 +51,7 @@ class Dashboard extends Component {
       github: this.state.github,
       linkedin: this.state.linkedin,
       facebook: this.state.facebook,
+      fullname: this.props.auth.fullname,
       id: this.props.auth.users
     };
 

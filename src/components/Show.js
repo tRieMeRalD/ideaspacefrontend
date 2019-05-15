@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 
 import TextAreaGroup from "./common/TextAreaGroup";
@@ -19,7 +18,8 @@ class Show extends Component {
       post: {},
       errors: {},
       comments: [],
-      posts: []
+      posts: [],
+      profiles: []
     };
 
     this.onChange = this.onChange.bind(this);
@@ -32,6 +32,10 @@ class Show extends Component {
 
     axios.get("/comments").then(res => {
       this.setState({ comments: res.data });
+    });
+
+    axios.get("/profile").then(res => {
+      this.setState({ profiles: res.data });
     });
   }
 
@@ -61,12 +65,25 @@ class Show extends Component {
 
   onClick = e => {
     e.preventDefault();
-
+    /* 
     axios.get("/posts").then(res => {
       this.setState({ posts: res.data });
+    }); */
+
+    this.state.profiles.map(p => {
+      if (p.id == this.state.post.accountId) {
+        this.props.setProfileLink(p.accountId);
+      }
+      console.log(p.id);
+      console.log(p.accountId);
     });
 
-    this.props.setProfileLink(this.state.post.accountId);
+    axios
+      .get("/profile")
+      .then(res => {
+        this.props.history.push(`/profiles/${this.state.post.accountId}`);
+      })
+      .catch(err => console.log(err));
 
     /*     this.state.posts.map(p => {
       if (p.accountId == this.state.post.accountId) {
@@ -116,13 +133,16 @@ class Show extends Component {
             ) : null}
           </h1>
           <p className="text-muted pt-1">
-            Author:
-            <Link to={`/profile/${this.state.post.id}`}>
+            Author:{" "}
+            {/* <Link to={`/profile/${this.state.post.accountId}`}>
               {this.state.post.name}
-            </Link>
+            </Link> */}
+            <button onClick={this.onClick}>{this.state.post.name}</button>
           </p>
 
-          <p className="lead pt-4">{this.state.post.body}</p>
+          <p style={{ whiteSpace: "pre-wrap" }} className="lead pt-4">
+            {this.state.post.body}
+          </p>
 
           <hr className="mb-2 mt-4" />
 
@@ -158,7 +178,7 @@ class Show extends Component {
                 <div>
                   {c.postId === this.state.post.id ? (
                     <span className="border border-white">
-                      <div className="card mb-4 mt-4">
+                      <div className="card">
                         <div className="card-body">
                           <p className="card-text pb-2">
                             <small className="lead">{c.comment}</small>
@@ -209,4 +229,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { commentSubmit, setProfileLink /* addLike, */ }
-)(withRouter(Show));
+)(Show);
