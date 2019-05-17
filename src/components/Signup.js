@@ -5,6 +5,8 @@ import { registerUser } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import signup from "../img/signup.png";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -52,56 +54,63 @@ class Signup extends Component {
     const { email, fullname, password } = this.state;
 
     return (
-      <div className="container pt-5" style={{ marginBottom: "300px" }}>
-        <form onSubmit={this.onSubmit} className="form-signin">
-          <h1 className="h3 mb-3 display-4 text-center">Signup Here</h1>
+      <div className="container pt-5" style={{ marginBottom: "250px" }}>
+        <div className="row">
+          <div className="col-6">
+            <form onSubmit={this.onSubmit} className="form-signin">
+              <h1 className="h3 mb-5 display-4 text-center">Signup Here</h1>
 
-          <label for="inputUsername" className="sr-only">
-            Username
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="inputEmail"
-            className="form-control mb-3"
-            placeholder="Username"
-            value={email}
-            onChange={this.onChange}
-          />
-          <label for="inputPassword" className="sr-only">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="inputPassword"
-            className="form-control mb-3"
-            placeholder="Password"
-            value={password}
-            onChange={this.onChange}
-          />
-          <label for="inputFullname" className="sr-only">
-            Full Name
-          </label>
-          <input
-            type="text"
-            name="fullname"
-            id="inputEmail"
-            className="form-control mb-3"
-            placeholder="Fullname"
-            value={fullname}
-            onChange={this.onChange}
-          />
-          <button
-            className="btn btn-lg btn-primary btn-block mb-2"
-            type="submit"
-          >
-            Sign Up
-          </button>
-          <p className="lead mt-2">
-            Already have an account? <Link to="/login">Login here.</Link>
-          </p>
-        </form>
+              <label for="inputUsername" className="sr-only">
+                Username
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="inputEmail"
+                className="form-control mb-3"
+                placeholder="Username"
+                value={email}
+                onChange={this.onChange}
+              />
+              <label for="inputPassword" className="sr-only">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="inputPassword"
+                className="form-control mb-3"
+                placeholder="Password"
+                value={password}
+                onChange={this.onChange}
+              />
+              <label for="inputFullname" className="sr-only">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullname"
+                id="inputEmail"
+                className="form-control mb-5"
+                placeholder="Fullname"
+                value={fullname}
+                onChange={this.onChange}
+              />
+              <button
+                className="btn btn-lg btn-primary btn-block mb-2"
+                type="submit"
+              >
+                Sign Up
+              </button>
+              <p className="lead mt-2">
+                Already have an account? <Link to="/login">Login here.</Link>
+              </p>
+            </form>
+          </div>
+          <div className="col-6">
+            <img src={signup} alt="" />
+          </div>
+        </div>
       </div>
     );
   }

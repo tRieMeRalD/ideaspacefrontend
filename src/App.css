@@ -3,6 +3,15 @@
     background: url('./img/landing2.png') no-repeat;
 }
 
+/* .login {
+    position: relative;
+    background-image: url('./img/login.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 75% 50%;
+    height: 1000px;
+} */
+
 .height-bg {
     height: 1000px;
 }

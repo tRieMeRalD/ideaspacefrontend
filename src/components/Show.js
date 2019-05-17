@@ -81,7 +81,7 @@ class Show extends Component {
     axios
       .get("/profile")
       .then(res => {
-        this.props.history.push(`/profiles/${this.state.post.accountId}`);
+        this.props.history.push(`/profile/${this.state.post.accountId}`);
       })
       .catch(err => console.log(err));
 
@@ -96,17 +96,30 @@ class Show extends Component {
     }); */
   };
 
-  onLikeClick(id) {
-    /* this.props.addLike(id); */
+  onDeleteClick = id => {
+    // TODO ~ FIX HISTORY PUSH ROUTE
     axios
+      .delete(`/comments/${id}`)
+      .then(res => this.props.history.push("/post"))
+      .catch(err => console.log(err));
+  };
+
+  onLikeClick = id => {
+    /* this.props.addLike(id); */
+    /* axios
       .put("/comments/" + id)
       .then(res => {
         this.props.history.push("/post");
       })
       .catch(err => {
         console.log(err);
-      });
-  }
+      }); */
+
+    axios
+      .put(`/comments/${id}`)
+      .then(res => this.props.history.push("/post"))
+      .catch(err => console.log(err));
+  };
 
   render() {
     const { errors, comment } = this.state;
@@ -187,13 +200,16 @@ class Show extends Component {
                           {c.like}
                           <button
                             type="button"
-                            onClick={this.onLikeClick.bind(this, c.postId)}
+                            onClick={this.onLikeClick.bind(this, c.id)}
                           >
                             <i className="fas fa-thumbs-up pl-2 pr-3" />
                           </button>
 
                           {this.props.auth.users == c.accountId ? (
-                            <button type="button">
+                            <button
+                              onClick={this.onDeleteClick.bind(this, c.id)}
+                              type="button"
+                            >
                               <i class="fas fa-trash-alt" />
                             </button>
                           ) : null}

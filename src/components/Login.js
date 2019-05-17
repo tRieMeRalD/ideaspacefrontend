@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 
 import { loginUser, setAccId, setFullname } from "../actions/authActions";
 
+import login from "../img/login.png";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -89,46 +91,53 @@ class Login extends Component {
     const { email, password } = this.state;
 
     return (
-      <div className="container pt-5" style={{ marginBottom: "400px" }}>
-        <form onSubmit={this.onSubmit} className="form-signin">
-          <h1 className="h3 mb-3 display-4 text-center">
-            Login into IdeaSpace
-          </h1>
+      <div className=" container pt-5" style={{ marginBottom: "250px" }}>
+        <div className="row">
+          <div className="col-6">
+            <form onSubmit={this.onSubmit} className="form-signin">
+              <h1 className="h3 mb-5 display-4 text-center">
+                Login into IdeaSpace
+              </h1>
 
-          <label for="inputEmail" className="sr-only">
-            Email address
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="inputEmail"
-            className="form-control mb-3"
-            placeholder="Email"
-            value={email}
-            onChange={this.onChange}
-          />
-          <label for="inputPassword" className="sr-only">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="inputPassword"
-            className="form-control mb-3"
-            placeholder="Password"
-            value={password}
-            onChange={this.onChange}
-          />
-          <button
-            className="btn btn-lg btn-primary btn-block mb-2"
-            type="submit"
-          >
-            Sign in
-          </button>
-        </form>
-        <p className="lead mt-3">
-          Don't have an account? <Link to="/signup">Sign up today!</Link>
-        </p>
+              <label for="inputEmail" className="sr-only">
+                Email address
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="inputEmail"
+                className="form-control mb-3"
+                placeholder="Email"
+                value={email}
+                onChange={this.onChange}
+              />
+              <label for="inputPassword" className="sr-only">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="inputPassword"
+                className="form-control mb-5"
+                placeholder="Password"
+                value={password}
+                onChange={this.onChange}
+              />
+              <button
+                className="btn btn-lg btn-primary btn-block mb-2"
+                type="submit"
+              >
+                Sign in
+              </button>
+            </form>
+            <p className="lead mt-3">
+              Don't have an account? <Link to="/signup">Sign up today!</Link>
+            </p>
+          </div>
+          <div className="col-6">
+            <img src={login} alt="" />
+          </div>
+        </div>
       </div>
     );
   }

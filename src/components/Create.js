@@ -8,7 +8,8 @@ import InputGroup from "./common/InputGroup";
 import TextAreaGroup from "./common/TextAreaGroup";
 
 import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+/* import ClassicEditor from "@ckeditor/ckeditor5-build-classic"; */
+import ClassicEditor from "./common/ClassicEditor";
 
 import post from "../img/post.png";
 
@@ -125,23 +126,23 @@ class Create extends Component {
                 />
               </div>
 
-              <div className="flex flex-wrap -mx-3 mb-6">
-                <CKEditor
-                  style={{ wordWrap: "break-word" }}
-                  editor={ClassicEditor}
-                  data="<p>Enter article body . . .</p>"
-                  onInit={editor => {
-                    // You can store the "editor" and use when it is needed.
-                    console.log("Editor is ready to use!", editor);
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    console.log({ event, editor, data });
-                  }}
-                />
-              </div>
-
-              <div className="flex flex-wrap -mx-3 mb-6">
+              {/* <CKEditor
+                style={{ wordWrap: "break-word" }}
+                editor={ClassicEditor}
+                data="<p>Enter article body . . .</p>"
+                onInit={editor => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log("Editor is ready to use!", editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log({ event, editor, data });
+                }}
+                name="body"
+                value={body}
+              />
+ */}
+              <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                 <InputGroup
                   divClassName="w-full px-3"
                   labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
