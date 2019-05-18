@@ -32,7 +32,88 @@ class Posts extends Component {
             Browse recent posts
           </h1>
           <img src={search} alt="" />
-          <h2 className="font-weight-bold text-center">Featured Posts</h2>
+          <div className="d-flex justify-content-between">
+            <div />
+            <h2 className=" font-weight-bold text-center">Featured Posts</h2>
+
+            <p>
+              <a
+                className="btn btn-outline-secondary"
+                data-toggle="collapse"
+                href="#collapseExample"
+                role="button"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                Sort by hashtag
+              </a>
+            </p>
+          </div>
+          <div className="collapse mt-4" id="collapseExample">
+            <div className="card card-body border border-white">
+              <p>
+                <span
+                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
+                  style={{ width: "10%" }}
+                >
+                  <button className="text-white font-weight-bold">
+                    Secondary
+                  </button>
+                </span>
+
+                <span
+                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
+                  style={{ width: "10%" }}
+                >
+                  <button className="text-white font-weight-bold">
+                    Secondary
+                  </button>
+                </span>
+
+                <span
+                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
+                  style={{ width: "10%" }}
+                >
+                  <button className="text-white font-weight-bold">
+                    Secondary
+                  </button>
+                </span>
+
+                <span
+                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
+                  style={{ width: "10%" }}
+                >
+                  <button className="text-white font-weight-bold">
+                    Secondary
+                  </button>
+                </span>
+
+                <span
+                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
+                  style={{ width: "10%" }}
+                >
+                  <button className="text-white font-weight-bold">
+                    Secondary
+                  </button>
+                </span>
+              </p>
+            </div>
+          </div>
+          {/* <nav className="uk-navbar-container mt-3" uk-navbar="true">
+            <div className="uk-navbar-left">
+              <div className="uk-navbar-item">
+                <form className="uk-search uk-search-navbar">
+                  <span uk-search-icon="true" />
+                  <input
+                    className="uk-search-input ml-3"
+                    type="search"
+                    placeholder="Search by tags . . ."
+                  />
+                </form>
+              </div>
+            </div>
+          </nav> */}
+
           <hr className="pt-3 pb-4" />
 
           {this.state.posts.map(p => (

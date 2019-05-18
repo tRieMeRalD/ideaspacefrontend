@@ -22,6 +22,7 @@ class Create extends Component {
       title: "",
       subTitle: "",
       body: "",
+      hashtag: "",
       imageURL: "",
       errors: {}
     };
@@ -56,7 +57,7 @@ class Create extends Component {
   };
 
   render() {
-    const { title, subTitle, body, imageURL, errors } = this.state;
+    const { title, subTitle, body, imageURL, errors, hashtag } = this.state;
 
     return (
       <div className="container pb-5">
@@ -142,6 +143,26 @@ class Create extends Component {
                 value={body}
               />
  */}
+              <div className="flex flex-wrap -mx-3 mb-6 mt-4">
+                <InputGroup
+                  divClassName="w-full px-3"
+                  labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                  forAttr="grid-tag"
+                  labelTitle="Hashtags"
+                  inputClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                  id="grid-tag"
+                  type="text"
+                  placeholder="Enter hashtags ..."
+                  name="hashtag"
+                  value={hashtag}
+                  onChange={this.onChange}
+                  error={errors.hashtag}
+                />
+                <p className="text-muted ml-3 mt-2">
+                  Separate hashtags with a ","
+                </p>
+              </div>
+
               <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                 <InputGroup
                   divClassName="w-full px-3"
