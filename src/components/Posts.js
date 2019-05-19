@@ -13,8 +13,12 @@ class Posts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      posts: [],
+      hashtags: [],
+      isToggleOn: false
     };
+
+    /* this.showHash = this.showHash.bind(this); */
   }
 
   componentDidMount() {
@@ -23,6 +27,31 @@ class Posts extends Component {
       console.log(this.state.posts);
     });
   }
+
+  /* showHash() {
+    const t = "";
+    this.state.posts.map(p => {
+      const s = p.hashtag;
+      console.log(s);
+      const a = s.split(",");
+      t = t + a;
+    });
+    this.setState({ hashtags: t });
+    console.log(this.state.hashtags);
+  } */
+
+  addTag = tag => {
+    this.state.posts.map(p => {
+      p.hashtag.split(",").map(h => {
+        if (h == tag) {
+          this.setState(state => ({
+            isToggleOn: !state.isToggleOn
+          }));
+        }
+      });
+    });
+    console.log(this.state.isToggleOn);
+  };
 
   render() {
     return (
@@ -44,58 +73,34 @@ class Posts extends Component {
                 role="button"
                 aria-expanded="false"
                 aria-controls="collapseExample"
+                /* onClick={this.showHash} */
               >
-                Sort by hashtag
+                Sort by popular tags
               </a>
             </p>
           </div>
           <div className="collapse mt-4" id="collapseExample">
             <div className="card card-body border border-white">
               <p>
-                <span
-                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
-                  style={{ width: "10%" }}
-                >
-                  <button className="text-white font-weight-bold">
-                    Secondary
-                  </button>
-                </span>
-
-                <span
-                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
-                  style={{ width: "10%" }}
-                >
-                  <button className="text-white font-weight-bold">
-                    Secondary
-                  </button>
-                </span>
-
-                <span
-                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
-                  style={{ width: "10%" }}
-                >
-                  <button className="text-white font-weight-bold">
-                    Secondary
-                  </button>
-                </span>
-
-                <span
-                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
-                  style={{ width: "10%" }}
-                >
-                  <button className="text-white font-weight-bold">
-                    Secondary
-                  </button>
-                </span>
-
-                <span
-                  className="badge badge-pill badge-dark btn-outline-secondary mr-3 pt-2 pb-2"
-                  style={{ width: "10%" }}
-                >
-                  <button className="text-white font-weight-bold">
-                    Secondary
-                  </button>
-                </span>
+                {this.state.posts.map(p => (
+                  <div>
+                    {p.hashtag.split(",").map(h => (
+                      <span
+                        className={`badge badge-pill ${
+                          this.state.isToggleOn ? "badge-success" : "badge-dark"
+                        } btn-outline-secondary mr-3 pt-2 pb-2`}
+                        style={{ width: "10%" }}
+                      >
+                        <button
+                          className="text-white font-weight-bold"
+                          onClick={this.addTag.bind(this, h)}
+                        >
+                          {h}
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                ))}
               </p>
             </div>
           </div>

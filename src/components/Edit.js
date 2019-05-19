@@ -18,6 +18,7 @@ class Edit extends Component {
       title: "",
       subTitle: "",
       body: "",
+      hashtag: "",
       imageURL: "",
       id: ""
     };
@@ -46,6 +47,7 @@ class Edit extends Component {
         title: post.title,
         subTitle: post.subTitle,
         body: post.body,
+        hashtag: post.hashtag,
         imageURL: post.imageURL,
         id: post.id
       });
@@ -64,6 +66,7 @@ class Edit extends Component {
       title: this.state.title,
       subTitle: this.state.subTitle,
       body: this.state.body,
+      hashtag: this.state.hashtag,
       imageURL: this.state.imageURL,
       id: this.state.id
     };
@@ -76,7 +79,16 @@ class Edit extends Component {
   }
 
   render() {
-    const { errors, name, title, subTitle, body, imageURL, id } = this.state;
+    const {
+      errors,
+      name,
+      title,
+      subTitle,
+      body,
+      imageURL,
+      hashtag,
+      id
+    } = this.state;
 
     return (
       <div>
@@ -143,6 +155,26 @@ class Edit extends Component {
                 onChange={this.onChange}
                 error={errors.body}
               />
+            </div>
+
+            <div className="flex flex-wrap -mx-3 mb-6 mt-4">
+              <InputGroup
+                divClassName="w-full px-3"
+                labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                forAttr="grid-tag"
+                labelTitle="Hashtags"
+                inputClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                id="grid-tag"
+                type="text"
+                placeholder="Enter hashtags ..."
+                name="hashtag"
+                value={hashtag}
+                onChange={this.onChange}
+                error={errors.hashtag}
+              />
+              <p className="text-muted ml-3 mt-2">
+                Separate hashtags with a ","
+              </p>
             </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">

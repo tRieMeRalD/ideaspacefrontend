@@ -4,6 +4,14 @@
 
 # Update threads
 
+## May 18, 2019 Update
+
+###### Color change when you click on a hashtag
+
+###### Hashtags now show up on the main post page
+
+###### Hashtags show up for individual posts
+
 ## May 17, 2019 Update
 
 ###### Sort by hashtag function (work in progress)

@@ -50,6 +50,7 @@ class Create extends Component {
       subTitle: this.state.subTitle,
       body: this.state.body,
       imageURL: this.state.imageURL,
+      hashtag: this.state.hashtag,
       accountId: this.props.auth.users
     };
 

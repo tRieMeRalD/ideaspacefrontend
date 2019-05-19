@@ -37,6 +37,10 @@ class Show extends Component {
     axios.get("/profile").then(res => {
       this.setState({ profiles: res.data });
     });
+
+    axios.get("/posts").then(res => {
+      this.setState({ posts: res.data });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -158,6 +162,27 @@ class Show extends Component {
           </p>
 
           <hr className="mb-2 mt-4" />
+
+          <p className="text-muted pt-1 pb-3">Hashtags: </p>
+
+          {this.state.posts.map(p => (
+            <div>
+              {p.id == this.props.match.params.id ? (
+                <div>
+                  {p.hashtag.split(",").map(h => (
+                    <span
+                      className={`badge badge-pill badge-dark btn-outline-secondary mr-3 mb-4 pt-2 pb-2`}
+                      style={{ width: "10%" }}
+                    >
+                      <button className="text-white font-weight-bold">
+                        {h}
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ))}
 
           <h2 className="display-4 mb-3">Comments</h2>
           <form onSubmit={this.onSubmit}>
