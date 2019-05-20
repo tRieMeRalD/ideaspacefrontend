@@ -171,12 +171,10 @@ class Show extends Component {
                 <div>
                   {p.hashtag.split(",").map(h => (
                     <span
-                      className={`badge badge-pill badge-dark btn-outline-secondary mr-3 mb-4 pt-2 pb-2`}
+                      className={`badge badge-pill badge-dark mr-3 mb-4 pt-2 pb-2`}
                       style={{ width: "10%" }}
                     >
-                      <button className="text-white font-weight-bold">
-                        {h}
-                      </button>
+                      <p className="font-weight-bold text-white">{h}</p>
                     </span>
                   ))}
                 </div>

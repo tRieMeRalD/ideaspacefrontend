@@ -12,6 +12,7 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "./common/ClassicEditor";
 
 import post from "../img/post.png";
+import axios from "axios";
 
 class Create extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Create extends Component {
       subTitle: "",
       body: "",
       hashtag: "",
+      hashtags: "",
       imageURL: "",
       errors: {}
     };
@@ -53,6 +55,22 @@ class Create extends Component {
       hashtag: this.state.hashtag,
       accountId: this.props.auth.users
     };
+
+    var s = this.state.hashtag;
+    var a = s.split(",");
+    /* console.log(a); */
+    for (var i = 0; i <= a.length; i++) {
+      if (a[i] != undefined || a[i] != "") {
+        const hashData = {
+          accountId: this.props.auth.users,
+          hashtags: this.state.hashtags.concat(a[i])
+        };
+        axios
+          .post("/hashtags", hashData)
+          .then(res => console.log("Tagged!"))
+          .catch(err => console.log(err));
+      }
+    }
 
     this.props.postSubmit(postData, this.props.history);
   };
