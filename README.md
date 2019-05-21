@@ -4,6 +4,10 @@
 
 # Update threads
 
+### May 20, 2019 Update
+
+Sorting function api function created
+
 ## May 19, 2019 Update
 
 ###### Sorting function api in progress
