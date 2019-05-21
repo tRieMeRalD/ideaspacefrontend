@@ -163,13 +163,17 @@ class Posts extends Component {
 
     this.state.searchtags.map(t => {
       this.state.posts.map(p => {
-        if (t == p.accountId) {
+        if (t == p.accountId && t != "") {
+          console.log("match!");
+          console.log(p.id);
           axios
-            .get(`/posts/${p.postId}`)
+            .get(`/posts/${p.id}`)
             .then(res => {
               this.setState(
                 {
-                  postbytag: this.state.postbytag.concat(res.data)
+                  postbytag: this.state.postbytag.concat(
+                    this.state.postbytag.push(res.data)
+                  )
                 },
                 () => console.log(this.state.postbytag)
               );
