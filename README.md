@@ -1,57 +1,32 @@
-# IdeaSpace Front-End - ICS Summative
+## IdeaSpace Front-End - ICS Summative
 
-## A blogging web application for people to share their journeys / experiences.
+A blogging web application for people to share their journeys / experiences.
 
-# Update threads
+## Downloading the source code
 
-### May 20, 2019 Update
+#### Clone the repository:
 
-Sorting function api function created
+```
+git clone https://github.com/tRieMeRalD/IdeaSpace-Frontend.git
+cd IdeaSpace-Frontend
+```
 
-## May 19, 2019 Update
+#### To run ReactJS build:
 
-###### Sorting function api in progress
+```
+cd client
+npm run build
+npm start
+```
 
-## May 18, 2019 Update
+#### Node dependencies required to run the project:
 
-###### Color change when you click on a hashtag
+```
+npm install --save axios jwt-decode react-redux react-router-dom redux redux-thunk
+```
 
-###### Hashtags now show up on the main post page
+## Update threads
 
-###### Hashtags show up for individual posts
+- See this [github] for the update thread.
 
-## May 17, 2019 Update
-
-###### Sort by hashtag function (work in progress)
-
-## May 16, 2019 Update
-
-###### Login/Signup UI updated
-
-###### Delete comment function working
-
-###### (Work in progress) Developing the like function
-
-## May 14, 2019 Update
-
-###### /profile/:id route created and functioning
-
-###### Post body line breaks are preserved
-
-###### Adding more text customization using CKEditor (work in progress)
-
-## May 13, 2019 Update
-
-###### Specific profile routes are being made /profile/:id
-
-###### Specific Post UI layout changed
-
-###### Comment section UI layout minor edits
-
-## May 12, 2019 Update
-
-###### Landing page UI --> fixed responsive issues
-
-## May 11, 2019 Update
-
-###### Initial Commit
+[github]: https://github.com/tRieMeRalD/IdeaSpace
