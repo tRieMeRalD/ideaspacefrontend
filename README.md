@@ -25,6 +25,12 @@ npm start
 npm install --save axios jwt-decode react-redux react-router-dom redux redux-thunk
 ```
 
+## Guideline - How to use IdeaSpace:
+
+- See this [repository] for a step-by-step tutorial.
+
+[repository]: https://github.com/tRieMeRalD/IdeaSpace
+
 ## Update threads
 
 - See this [github] for the update thread.
