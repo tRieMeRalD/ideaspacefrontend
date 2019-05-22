@@ -3,12 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import classnames from "classnames";
 
 import TextAreaGroup from "./common/TextAreaGroup";
 
 import { commentSubmit } from "../actions/CommentActions";
-import { addLike, removeLike } from "../actions/CommentActions";
+/* import { addLike, removeLike } from "../actions/CommentActions"; */
 import { setProfileLink } from "../actions/PostAction";
 
 class Show extends Component {
@@ -69,13 +68,9 @@ class Show extends Component {
 
   onClick = e => {
     e.preventDefault();
-    /* 
-    axios.get("/posts").then(res => {
-      this.setState({ posts: res.data });
-    }); */
 
     this.state.profiles.map(p => {
-      if (p.id == this.state.post.accountId) {
+      if (p.id === this.state.post.accountId) {
         this.props.setProfileLink(p.accountId);
       }
       console.log(p.id);
@@ -88,16 +83,6 @@ class Show extends Component {
         this.props.history.push(`/profile/${this.state.post.accountId}`);
       })
       .catch(err => console.log(err));
-
-    /*     this.state.posts.map(p => {
-      if (p.accountId == this.state.post.accountId) {
-        this.props.setProfileLink(p.id);
-      }
-    });
-
-    axios.get(`/profile/${this.state.post.accountId}`).then(res => {
-      this.props.history.push(`/profile/${this.state.post.accountId}`);
-    }); */
   };
 
   onDeleteClick = id => {
@@ -109,16 +94,6 @@ class Show extends Component {
   };
 
   onLikeClick = id => {
-    /* this.props.addLike(id); */
-    /* axios
-      .put("/comments/" + id)
-      .then(res => {
-        this.props.history.push("/post");
-      })
-      .catch(err => {
-        console.log(err);
-      }); */
-
     axios
       .put(`/comments/${id}`)
       .then(res => this.props.history.push("/post"))
@@ -142,7 +117,7 @@ class Show extends Component {
           <h1 className="display-4 pt-2 pb-2">
             {this.state.post.title}
 
-            {this.props.auth.users == this.state.post.accountId ? (
+            {this.props.auth.users === this.state.post.accountId ? (
               <Link to={`/edit/${this.state.post.id}`}>
                 {" "}
                 <i class="fas fa-pencil-alt" />
@@ -151,9 +126,6 @@ class Show extends Component {
           </h1>
           <p className="text-muted pt-1">
             Author:{" "}
-            {/* <Link to={`/profile/${this.state.post.accountId}`}>
-              {this.state.post.name}
-            </Link> */}
             <button onClick={this.onClick}>{this.state.post.name}</button>
           </p>
 
@@ -167,7 +139,7 @@ class Show extends Component {
 
           {this.state.posts.map(p => (
             <div>
-              {p.id == this.props.match.params.id ? (
+              {p.id === this.props.match.params.id ? (
                 <div>
                   {p.hashtag.split(",").map(h => (
                     <span
@@ -204,7 +176,7 @@ class Show extends Component {
             <input type="submit" value="Submit" className="btn btn-primary" />
           </form>
 
-          {this.state.comments.length == 0 ? (
+          {this.state.comments.length === 0 ? (
             <div class="alert alert-warning mt-2" role="alert">
               No comments, be the first to comment!
             </div>
@@ -228,7 +200,7 @@ class Show extends Component {
                             <i className="fas fa-thumbs-up pl-2 pr-3" />
                           </button>
 
-                          {this.props.auth.users == c.accountId ? (
+                          {this.props.auth.users === c.accountId ? (
                             <button
                               onClick={this.onDeleteClick.bind(this, c.id)}
                               type="button"

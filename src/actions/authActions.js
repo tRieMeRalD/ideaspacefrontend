@@ -23,7 +23,6 @@ export const loginUser = userData => dispatch => {
     // Decode token to get user data
     const decoded = jwt_decode(token);
     // Set current user
-    /*     dispatch(setAccId(userData.accountId)); */
     dispatch(setCurrentUser(decoded));
   });
 };
@@ -53,8 +52,4 @@ export const logoutUser = history => dispatch => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser());
-  /* return {
-    type: SET_ACCOUNT_ID,
-    payload: ""
-  }; */
 };

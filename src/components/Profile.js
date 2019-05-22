@@ -37,7 +37,7 @@ class Profile extends Component {
     e.preventDefault();
 
     this.state.profile.map(p => {
-      if (p.id == this.props.auth.users) {
+      if (p.id === this.props.auth.users) {
         this.props.setEditProfile(p.accountId);
       }
     });
@@ -55,30 +55,21 @@ class Profile extends Component {
       <div className="container pt-5">
         {this.state.profile.map(p => (
           <div>
-            {this.state.profile == undefined ? (
+            {this.state.profile === undefined ? (
               <p className="lead pt-5 pb-3">
                 No profile, create one <Link to="/dashboard">here</Link>
               </p>
             ) : (
               <div>
-                {this.props.auth.users == p.id ? (
+                {this.props.auth.users === p.id ? (
                   <div>
                     <div className="fb-profile">
-                      {/*                       <img
-                        style={{ display: "block", width: "100%", height: "525px" }}
-                        className="mr-auto ml-auto img-responsive"
-                        src={`${p.bgPic}`}
-                      /> */}
                       <img
                         align="left"
                         className="fb-image-lg"
                         src={`${p.bgPic}`}
+                        alt="background"
                       />
-                      {/*                       <img
-                        src={`${p.profilePic}`}
-                        style={{ width: "200px", height: "200px" }}
-                        className="rounded-circle img-responsive"
-                      /> */}
                       <img
                         align="left"
                         style={{
@@ -88,6 +79,7 @@ class Profile extends Component {
                         }}
                         src={`${p.profilePic}`}
                         className="rounded-circle fb-image-profile thumbnail"
+                        alt="Profile"
                       />
                       <div className="pl-2">
                         <div className="fb-profile-text">
@@ -98,10 +90,6 @@ class Profile extends Component {
                         </div>
                       </div>
                     </div>
-
-                    {/* <Link to={`/profile/edit/${this.props.auth.users}`}>
-                      Edit Profile <i class="fas fa-pencil-alt" />
-                    </Link> */}
 
                     <button onClick={this.onClick}>
                       Edit Profile <i class="fas fa-pencil-alt" />
@@ -114,6 +102,7 @@ class Profile extends Component {
                         <a
                           className="fb-ic"
                           href={`${p.facebook}`}
+                          rel="noopener noreferrer"
                           target="_blank"
                         >
                           <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -126,6 +115,7 @@ class Profile extends Component {
                         <a
                           className="ig-ic"
                           href={`${p.instagram}`}
+                          rel="noopener noreferrer"
                           target="_blank"
                         >
                           <i className="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -138,6 +128,7 @@ class Profile extends Component {
                         <a
                           className="li-ic"
                           href={`${p.linkedin}`}
+                          rel="noopener noreferrer"
                           target="_blank"
                         >
                           <i className="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -150,6 +141,7 @@ class Profile extends Component {
                         <a
                           className="gh-ic"
                           href={`${p.github}`}
+                          rel="noopener noreferrer"
                           target="_blank"
                         >
                           <i className="fab fa-github fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -172,13 +164,13 @@ class Profile extends Component {
 
         {this.state.posts.map(p => (
           <div>
-            {this.state.posts.length == undefined ? (
+            {this.state.posts.length === undefined ? (
               <p className="lead pt-5 pb-3">
                 No posts, create one <Link to="/create">here</Link>
               </p>
             ) : (
               <div>
-                {this.props.auth.users == p.accountId ? (
+                {this.props.auth.users === p.accountId ? (
                   <div>
                     <Link to={`/show/${p.id}`}>
                       <img
@@ -189,7 +181,7 @@ class Profile extends Component {
                         }}
                         className="mr-auto ml-auto"
                         src={`${p.imageURL}`}
-                        alt=""
+                        alt="thumbnail"
                       />
                     </Link>
                     <h3 className="font-weight-bold pt-2">{p.title}</h3>

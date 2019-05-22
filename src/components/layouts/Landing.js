@@ -118,30 +118,6 @@ class Landing extends Component {
                 />
               </div>
             </div>
-
-            {/* <div className="row">
-              <div className="col-6 ">
-                <h3 className="pb-3">Contact us through social media!</h3>
-                <div className="row">
-                  <div className="col-2">
-                    <i className="fas fa-envelope-open-text fa-3x pb-4 pb-2" />
-                    <br />
-                    <i className="fab fa-facebook fa-3x pb-4" />
-                    <br />
-                    <i className="fab fa-twitter fa-3x" />
-                  </div>
-
-                  <div className="col">
-                    <p className="lead pt-2">horizon.william14@gmail.com</p>
-                    <p className="lead pt-5">@IdeaSpace</p>
-                    <p className="lead pt-5">@IdeaSpace</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6 col-md-6">
-                <img className="img-fluid" src={contact} alt="" />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

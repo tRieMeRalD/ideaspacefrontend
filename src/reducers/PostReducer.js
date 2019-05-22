@@ -1,9 +1,4 @@
-import {
-  GET_ERRORS,
-  GET_POST,
-  GET_POSTS,
-  SET_PROFILE_ID
-} from "../actions/types";
+import { GET_POST, SET_PROFILE_ID } from "../actions/types";
 
 const initialState = { post: null, posts: null, profileId: "" };
 

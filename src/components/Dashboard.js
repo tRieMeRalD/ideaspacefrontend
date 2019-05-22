@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { submitProfile } from "../actions/userActions";
 
 class Dashboard extends Component {
@@ -22,12 +21,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    /* axios
-      .get("/api/products")
-      .then(res => {
-        this.setState({ users: res.data });
-      })
-      .catch(err => console.log(err)); */
+    // Get users database
     axios
       .get("/users")
       .then(res => {
@@ -55,8 +49,6 @@ class Dashboard extends Component {
       id: this.props.auth.users
     };
 
-    /* console.log(this.props.auth.users); */
-
     this.props.submitProfile(profileData, this.props.history);
   };
 
@@ -72,18 +64,8 @@ class Dashboard extends Component {
     } = this.state;
 
     return (
-      /* Check if dashboard model is empty or not and display create one, or just show the actual profile */
       <div className="container pt-5" style={{ marginBottom: "500px" }}>
         <h1 className="display-4">Configure Profile Settings</h1>
-        {/* <p className="lead pt-2">
-          Looks like your profile is empty, create one <Link to="/">here</Link>
-        </p>
-        <p className="lead pt-2">
-          View all posts <Link to="/post">here</Link>
-        </p>
-        <p className="lead pt-2">
-          Create a post <Link to="/create">here</Link>
-        </p> */}
 
         <form className="pt-3" onSubmit={this.onSubmit}>
           <div className="form-group">

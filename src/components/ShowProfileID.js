@@ -16,18 +16,6 @@ class ShowProfileID extends Component {
   }
 
   componentDidMount() {
-    // TODO
-    // GET profiles & map (p)
-    //      If this.props.post account id = profile (p) account id
-    //              Set the STATES for each field using that p.accountid
-    /* axios
-      .get(`/profile/${this.props.match.params.id}`)
-      .then(res => {
-        this.setState({ profile: res.data });
-      })
-      .catch(err => console.log(err));
-*/
-
     axios
       .get("/posts")
       .then(res => {
@@ -51,6 +39,7 @@ class ShowProfileID extends Component {
               align="left"
               className="fb-image-lg"
               src={`${profile.bgPic}`}
+              alt="background"
             />
 
             <img
@@ -62,6 +51,7 @@ class ShowProfileID extends Component {
               }}
               src={`${profile.profilePic}`}
               className="rounded-circle fb-image-profile thumbnail"
+              alt="profile"
             />
             <div className="pl-2">
               <div className="fb-profile-text">
@@ -75,7 +65,12 @@ class ShowProfileID extends Component {
 
           <p className="text-center">
             {profile.facebook != null ? (
-              <a className="fb-ic" href={`${profile.facebook}`} target="_blank">
+              <a
+                className="fb-ic"
+                href={`${profile.facebook}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x">
                   {" "}
                 </i>
@@ -86,6 +81,7 @@ class ShowProfileID extends Component {
               <a
                 className="ig-ic"
                 href={`${profile.instagram}`}
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 <i className="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -95,7 +91,12 @@ class ShowProfileID extends Component {
             ) : null}
 
             {profile.linkedin != null ? (
-              <a className="li-ic" href={`${profile.linkedin}`} target="_blank">
+              <a
+                className="li-ic"
+                href={`${profile.linkedin}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 <i className="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x">
                   {" "}
                 </i>
@@ -103,7 +104,12 @@ class ShowProfileID extends Component {
             ) : null}
 
             {profile.github != null ? (
-              <a className="gh-ic" href={`${profile.github}`} target="_blank">
+              <a
+                className="gh-ic"
+                href={`${profile.github}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 <i className="fab fa-github fa-lg white-text mr-md-5 mr-3 fa-2x">
                   {" "}
                 </i>
@@ -119,11 +125,11 @@ class ShowProfileID extends Component {
 
         {this.state.posts.map(p => (
           <div>
-            {this.state.posts.length == undefined ? (
+            {this.state.posts.length === undefined ? (
               <p className="lead pt-5 pb-3">This user has no posts!</p>
             ) : (
               <div>
-                {profile.id == p.accountId ? (
+                {profile.id === p.accountId ? (
                   <div>
                     <Link to={`/show/${p.id}`}>
                       <img
@@ -134,7 +140,7 @@ class ShowProfileID extends Component {
                         }}
                         className="mr-auto ml-auto"
                         src={`${p.imageURL}`}
-                        alt=""
+                        alt="thumbnail"
                       />
                     </Link>
                     <h3 className="font-weight-bold pt-2">{p.title}</h3>

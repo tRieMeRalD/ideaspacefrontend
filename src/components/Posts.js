@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-/* import PropTypes from "prop-types";
- import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-
-import { getAllPosts } from "../actions/PostAction"; */
 
 import search from "../img/search.png";
 
@@ -16,22 +11,22 @@ class Posts extends Component {
       posts: [],
       hashtags: [],
       tags: [],
-      aa: [],
+      hashFilter: [],
       searchtags: [],
       postbytag: [],
       hashSearch: "",
       isToggleOn: false
     };
-
-    /* this.showHash = this.showHash.bind(this); */
   }
 
   componentDidMount() {
+    // GET posts from database
     axios.get("/posts").then(res => {
       this.setState({ posts: res.data });
       console.log(this.state.posts);
     });
 
+    // GET all hashtags from database
     axios
       .get("/hashtags")
       .then(res => {
@@ -41,22 +36,11 @@ class Posts extends Component {
       .catch(err => console.log(err));
   }
 
-  /* showHash() {
-    const t = "";
-    this.state.posts.map(p => {
-      const s = p.hashtag;
-      console.log(s);
-      const a = s.split(",");
-      t = t + a;
-    });
-    this.setState({ hashtags: t });
-    console.log(this.state.hashtags);
-  } */
-
+  // Add hashtag to hashSearch array
   addTag = tag => {
     this.state.posts.map(p => {
       p.hashtag.split(",").map(h => {
-        if (h == tag) {
+        if (h === tag) {
           this.setState(state => ({
             isToggleOn: !state.isToggleOn,
             hashSearch: this.state.hashSearch + h + ", "
@@ -67,14 +51,13 @@ class Posts extends Component {
     console.log(this.state.isToggleOn);
   };
 
+  // Reset hashSearch if wrong input
   clearSearch() {
     this.setState({ hashSearch: "" });
   }
 
+  // Filter the tags and add to a hashFilter
   onFilter() {
-    var s = this.state.hashSearch;
-    var a = s.split(", ");
-
     this.state.posts.map(p => {
       this.setState(
         { tags: this.state.tags.concat(this.state.tags.push(p.hashtag)) },
@@ -84,37 +67,25 @@ class Posts extends Component {
 
     this.setState(
       {
-        aa: this.state.aa.concat(this.state.hashSearch.split(", "))
+        hashFilter: this.state.hashFilter.concat(
+          this.state.hashSearch.split(", ")
+        )
       },
-      () => console.log(this.state.aa)
+      () => console.log(this.state.hashFilter)
     );
-
-    /*     this.state.aa.forEach(e1 =>
-      this.state.tags.forEach(t => {
-        if (e1 == t) {
-          this.setState(
-            {
-              searchtags: this.state.searchtags.concat(
-                this.state.searchtags.push(t.accountId)
-              )
-            },
-            () => console.log(this.state.searchtags)
-          );
-        }
-      })
-    ); */
   }
 
+  // Cycles through hashFilter
   onLoadFilter() {
-    this.state.aa.map(a => {
+    this.state.hashFilter.map(h => {
       this.state.tags[0].split(", ").map(t => {
-        if (a == t) {
-          this.state.hashtags.map(tt => {
-            if (tt.hashtags == t) {
+        if (h === t) {
+          this.state.hashtags.map(ht => {
+            if (ht.hashtags === t) {
               this.setState(
                 {
                   searchtags: this.state.searchtags.concat(
-                    this.state.searchtags.push(tt.accountId)
+                    this.state.searchtags.push(ht.accountId)
                   )
                 },
                 () => console.log(this.state.searchtags)
@@ -123,49 +94,12 @@ class Posts extends Component {
           });
         }
       });
-
-      /*       for (var i = 0; i <= this.state.tags.length; i++) {
-        if (a == this.state.tags[i]) {
-          console.log("matches!");
-          this.state.hashtags.map(tt => {
-            if (tt.hashtag == this.state.tags[i]) {
-              this.setState(
-                {
-                  searchtags: this.state.searchtags.concat(
-                    this.state.searchtags.push(tt.accountId)
-                  )
-                },
-                () => console.log(this.state.searchtags)
-              );
-            }
-          });
-        }
-      } */
-      /*       this.state.tags.map(t => {
-        console.log(t);
-        if (a == t) {
-          console.log("matches!");
-          this.state.hashtags.map(tt => {
-            if (tt.hashtag == t) {
-              this.setState(
-                {
-                  searchtags: this.state.searchtags.concat(
-                    this.state.searchtags.push(tt.accountId)
-                  )
-                },
-                () => console.log(this.state.searchtags)
-              );
-            }
-          });
-        }
-      }); */
     });
 
+    // Retrieves post ID from the array and makes a GET request
     this.state.searchtags.map(t => {
       this.state.posts.map(p => {
-        if (t == p.accountId && t != "") {
-          console.log("match!");
-          console.log(p.id);
+        if (t === p.accountId && t !== "") {
           axios
             .get(`/posts/${p.id}`)
             .then(res => {
@@ -204,7 +138,6 @@ class Posts extends Component {
                 role="button"
                 aria-expanded="false"
                 aria-controls="collapseExample"
-                /* onClick={this.showHash} */
               >
                 Sort by popular tags
               </a>
@@ -250,7 +183,7 @@ class Posts extends Component {
                 </button>
 
                 <p className="text-muted">
-                  {this.state.hashSearch == ""
+                  {this.state.hashSearch === ""
                     ? "Searching for nothing!"
                     : "You are searching for: " + this.state.hashSearch}
                 </p>
@@ -283,20 +216,6 @@ class Posts extends Component {
               <hr className="pt-2 pb-3" />
             </div>
           ))}
-          {/* <nav className="uk-navbar-container mt-3" uk-navbar="true">
-            <div className="uk-navbar-left">
-              <div className="uk-navbar-item">
-                <form className="uk-search uk-search-navbar">
-                  <span uk-search-icon="true" />
-                  <input
-                    className="uk-search-input ml-3"
-                    type="search"
-                    placeholder="Search by tags . . ."
-                  />
-                </form>
-              </div>
-            </div>
-          </nav> */}
 
           <hr className="pt-3 pb-4" />
 
@@ -321,13 +240,5 @@ class Posts extends Component {
     );
   }
 }
-
-/* Posts.propTypes = {
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  errors: state.errors
-}); */
 
 export default Posts;

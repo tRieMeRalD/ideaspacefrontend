@@ -6,13 +6,6 @@ import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/userActions";
 
 class Header extends Component {
-  /*   onLogoutClick(e) {
-    e.preventDefault();
-
-    this.props.clearCurrentProfile();
-    this.props.logoutUser();
-  } */
-
   render() {
     const { isAuthenticated } = this.props.auth;
 

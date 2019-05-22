@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET_ERRORS, GET_COMMENTS, GET_LIKES } from "./types";
+import { GET_ERRORS, GET_LIKES } from "./types";
 
 // Create comment
 export const commentSubmit = (commentData, history) => dispatch => {
   axios
     .post(`/comments/${commentData.postId}`, commentData)
-    .then(res => history.push("/posts")) // MAY 2 CHANGE
+    .then(res => history.push("/posts"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

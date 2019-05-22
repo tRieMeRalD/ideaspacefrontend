@@ -7,10 +7,6 @@ import { postSubmit } from "../actions/PostAction";
 import InputGroup from "./common/InputGroup";
 import TextAreaGroup from "./common/TextAreaGroup";
 
-import CKEditor from "@ckeditor/ckeditor5-react";
-/* import ClassicEditor from "@ckeditor/ckeditor5-build-classic"; */
-import ClassicEditor from "./common/ClassicEditor";
-
 import post from "../img/post.png";
 import axios from "axios";
 
@@ -39,6 +35,7 @@ class Create extends Component {
     }
   }
 
+  // Update HTMl fields
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -46,6 +43,7 @@ class Create extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    // Getting data from HTMl fields
     const postData = {
       name: this.props.auth.fullname,
       title: this.state.title,
@@ -56,15 +54,19 @@ class Create extends Component {
       accountId: this.props.auth.users
     };
 
-    var s = this.state.hashtag;
-    var a = s.split(",");
-    /* console.log(a); */
-    for (var i = 0; i <= a.length; i++) {
-      if (a[i] != undefined || a[i] != "") {
+    // Split string by ',' as indicated by instructions
+    var strHash = this.state.hashtag;
+    var arrHash = strHash.split(",");
+
+    for (var i = 0; i <= arrHash.length; i++) {
+      if (arrHash[i] !== undefined || arrHash[i] !== "") {
+        // Append each hashtag to database
         const hashData = {
           accountId: this.props.auth.users,
-          hashtags: this.state.hashtags.concat(a[i])
+          hashtags: this.state.hashtags.concat(arrHash[i])
         };
+
+        // SAVE each hashtag to database
         axios
           .post("/hashtags", hashData)
           .then(res => console.log("Tagged!"))
@@ -72,6 +74,7 @@ class Create extends Component {
       }
     }
 
+    // Submit
     this.props.postSubmit(postData, this.props.history);
   };
 
@@ -85,18 +88,6 @@ class Create extends Component {
             <h1 className="display-4 pt-5 pb-4">Create a new post</h1>
 
             <form onSubmit={this.onSubmit} className="w-full max-w-md">
-              {/*               <div className="flex items-center border-b border-b-2 border-teal py-2 mb-4">
-                <input
-                  className="appearance-none bg-transparent border-none w-full text-grey-darker mr-3 py-1 px-2 leading-tight focus:outline-none"
-                  type="text"
-                  placeholder="Enter author alias"
-                  name="name"
-                  value={name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-              </div> */}
-
               <div className="flex flex-wrap -mx-3 mb-6">
                 <InputGroup
                   divClassName="w-full md:w-1/2 px-3 mb-6 md:mb-0"
@@ -146,22 +137,6 @@ class Create extends Component {
                 />
               </div>
 
-              {/* <CKEditor
-                style={{ wordWrap: "break-word" }}
-                editor={ClassicEditor}
-                data="<p>Enter article body . . .</p>"
-                onInit={editor => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  console.log({ event, editor, data });
-                }}
-                name="body"
-                value={body}
-              />
- */}
               <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                 <InputGroup
                   divClassName="w-full px-3"

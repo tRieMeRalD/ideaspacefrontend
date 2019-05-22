@@ -42,11 +42,6 @@ class Login extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    /* const { email, password } = this.state;
-
-    axios.post("/api/auth/login", { email, password }).then(res => {
-      this.props.history.push("/dashboard");
-    }); */
     axios
       .get("/users")
       .then(res => {
@@ -55,15 +50,7 @@ class Login extends Component {
       .catch(err => console.log(err));
 
     this.state.users.map(u => {
-      if (u.email.trim() == this.state.email) {
-        /* this.setState({ accountId: u.id }); */
-
-        /* const userData = {
-          email: this.state.email,
-          password: this.state.password,
-          accountId: this.state.accountId
-        }; */
-
+      if (u.email.trim() === this.state.email) {
         this.props.setAccId(u.id);
         this.props.setFullname(u.fullname);
         console.log(this.state.accountId);
@@ -76,15 +63,9 @@ class Login extends Component {
     const userData = {
       email: this.state.email,
       password: this.state.password
-      /* accountId: this.state.accountId */
-    };
-
-    const authId = {
-      accountId: this.state.accountId
     };
 
     this.props.loginUser(userData);
-    /* this.props.setAccId(authId); */
   };
 
   render() {

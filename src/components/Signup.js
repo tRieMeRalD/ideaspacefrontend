@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 import PropTypes from "prop-types";
@@ -21,6 +20,7 @@ class Signup extends Component {
   }
 
   componentDidMount() {
+    // If logged in --> redirect
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
@@ -32,14 +32,6 @@ class Signup extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
-    /* const { email, fullname, password } = this.state;
-
-    axios
-      .post("/api/auth/register", { email, fullname, password })
-      .then(res => {
-        this.props.history.push("/login");
-      }); */
 
     const userData = {
       email: this.state.email,

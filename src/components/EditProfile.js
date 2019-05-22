@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateProfile, setEditProfile } from "../actions/userActions";
+import { updateProfile } from "../actions/userActions";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -26,13 +26,6 @@ class EditProfile extends Component {
   }
 
   componentDidMount() {
-    /* axios
-      .get(`/profile/${this.props.auth.users}`)
-      .then(res => {
-        this.setState({ profile: res.data });
-      })
-      .catch(err => console.log(err)); */
-
     console.log(this.props.user.edit);
     axios
       .get(`/profile/${this.props.user.edit}`)

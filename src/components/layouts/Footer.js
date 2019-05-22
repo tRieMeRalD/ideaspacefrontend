@@ -12,6 +12,7 @@ class Footer extends Component {
                   <a
                     className="fb-ic"
                     href="https://www.facebook.com/"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -22,6 +23,7 @@ class Footer extends Component {
                   <a
                     className="tw-ic"
                     href="https://twitter.com/"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <i className="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -32,6 +34,7 @@ class Footer extends Component {
                   <a
                     className="li-ic"
                     href="https://www.linkedin.com/"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <i className="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x">
@@ -42,6 +45,7 @@ class Footer extends Component {
                   <a
                     className="ins-ic"
                     href="https://www.instagram.com"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <i className="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x">
