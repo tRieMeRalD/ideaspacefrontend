@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { submitProfile } from "../actions/userActions";
+import { submitProfile, setEditProfile } from "../actions/userActions";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class Dashboard extends Component {
 
     this.state = {
       users: [],
+      profiles: [],
       profilePic: "",
       bgPic: "",
       bioInfo: "",
@@ -28,6 +29,21 @@ class Dashboard extends Component {
         this.setState({ users: res.data });
       })
       .catch(err => console.log(err));
+
+    // Get profile
+    axios.get("/profile").then(res => {
+      this.setState({ profiles: res.data });
+    });
+  }
+
+  componentDidUpdate() {
+    // Check if user profile is created --> redirect if created
+    this.state.profiles.map(p => {
+      if (p.id === this.props.auth.users) {
+        this.props.setEditProfile(p.accountId);
+        this.props.history.push(`/profile/edit/${this.props.auth.users}`);
+      }
+    });
   }
 
   onChange = e => {
@@ -192,7 +208,8 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
-  submitProfile: PropTypes.func.isRequired
+  submitProfile: PropTypes.func.isRequired,
+  setEditProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -201,5 +218,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { submitProfile }
+  { submitProfile, setEditProfile }
 )(Dashboard);

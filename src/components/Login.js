@@ -53,11 +53,7 @@ class Login extends Component {
       if (u.email.trim() === this.state.email) {
         this.props.setAccId(u.id);
         this.props.setFullname(u.fullname);
-        console.log(this.state.accountId);
       }
-      console.log(u.email);
-      console.log(this.state.email);
-      console.log(u.id);
     });
 
     const userData = {
