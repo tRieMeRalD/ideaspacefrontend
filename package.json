@@ -17,6 +17,7 @@
     "@ckeditor/ckeditor5-theme-lark": "^13.0.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "formik": "^1.5.7",
     "jwt-decode": "^2.2.0",
     "raw-loader": "^2.0.0",
     "react": "^16.8.6",
@@ -25,7 +26,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

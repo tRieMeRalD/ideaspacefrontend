@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import classnames from "classnames";
 
 import { loginUser, setAccId, setFullname } from "../actions/authActions";
 
@@ -16,7 +17,11 @@ class Login extends Component {
       email: "",
       password: "",
       accountId: "",
-      users: []
+      users: [],
+      didSubmit: false,
+      isEmailEmpty: true,
+      isPasswordEmpty: true,
+      didFill: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -37,35 +42,61 @@ class Login extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if (this.state.email !== "" && this.state.didSubmit) {
+      this.setState({ isEmailEmpty: false });
+    } else {
+      this.setState({ isEmailEmpty: true });
+    }
+
+    if (this.state.password !== "" && this.state.didSubmit) {
+      this.setState({ isPasswordEmpty: false });
+    } else {
+      this.setState({ isPasswordEmpty: true });
+    }
+
+    if (!this.state.isPasswordEmpty && !this.state.isEmailEmpty) {
+      this.setState({ didFill: true });
+    }
   };
 
   onSubmit = e => {
     e.preventDefault();
 
-    axios
-      .get("/users")
-      .then(res => {
-        this.setState({ users: res.data });
-      })
-      .catch(err => console.log(err));
+    this.setState({ didSubmit: true });
 
-    this.state.users.map(u => {
-      if (u.email.trim() === this.state.email) {
-        this.props.setAccId(u.id);
-        this.props.setFullname(u.fullname);
-      }
-    });
+    if (this.state.didFill) {
+      axios
+        .get("/users")
+        .then(res => {
+          this.setState({ users: res.data });
+        })
+        .catch(err => console.log(err));
 
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
-    };
+      this.state.users.map(u => {
+        if (u.email.trim() === this.state.email) {
+          this.props.setAccId(u.id);
+          this.props.setFullname(u.fullname);
+        }
+      });
 
-    this.props.loginUser(userData);
+      const userData = {
+        email: this.state.email,
+        password: this.state.password
+      };
+
+      this.props.loginUser(userData);
+    }
   };
 
   render() {
-    const { email, password } = this.state;
+    const {
+      email,
+      password,
+      isEmailEmpty,
+      isPasswordEmpty,
+      didSubmit
+    } = this.state;
 
     return (
       <div className=" container pt-5" style={{ marginBottom: "250px" }}>
@@ -76,30 +107,50 @@ class Login extends Component {
                 Login into IdeaSpace
               </h1>
 
-              <label for="inputEmail" className="sr-only">
-                Email address
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="inputEmail"
-                className="form-control mb-3"
-                placeholder="Email"
-                value={email}
-                onChange={this.onChange}
-              />
-              <label for="inputPassword" className="sr-only">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="inputPassword"
-                className="form-control mb-5"
-                placeholder="Password"
-                value={password}
-                onChange={this.onChange}
-              />
+              <div className="mb-4">
+                <label htmlFor="inputEmail" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="inputEmail"
+                  className={classnames("form-control", {
+                    "is-invalid": isEmailEmpty && didSubmit
+                  })}
+                  placeholder="Email"
+                  value={email}
+                  onChange={this.onChange}
+                />
+                {isEmailEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter your email
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="mb-5">
+                <label for="inputPassword" className="sr-only">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="inputPassword"
+                  className={classnames("form-control", {
+                    "is-invalid": isPasswordEmpty && didSubmit
+                  })}
+                  placeholder="Password"
+                  value={password}
+                  onChange={this.onChange}
+                />
+                {isPasswordEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter your password
+                  </div>
+                ) : null}
+              </div>
+
               <button
                 className="btn btn-lg btn-primary btn-block mb-2"
                 type="submit"

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import classnames from "classnames";
 
 import signup from "../img/signup.png";
 
@@ -12,7 +13,12 @@ class Signup extends Component {
     this.state = {
       email: "",
       fullname: "",
-      password: ""
+      password: "",
+      isUserEmpty: true,
+      isPasswordEmpty: true,
+      isNameEmpty: true,
+      didSubmit: false,
+      didFill: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -28,22 +34,60 @@ class Signup extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if (this.state.email !== "" && this.state.didSubmit) {
+      this.setState({ isUserEmpty: false });
+    } else {
+      this.setState({ isUserEmpty: true });
+    }
+
+    if (this.state.password !== "" && this.state.didSubmit) {
+      this.setState({ isPasswordEmpty: false });
+    } else {
+      this.setState({ isPasswordEmpty: true });
+    }
+
+    if (this.state.fullname !== "" && this.state.didSubmit) {
+      this.setState({ isNameEmpty: false });
+    } else {
+      this.setState({ isNameEmpty: true });
+    }
+
+    if (
+      !this.state.isPasswordEmpty &&
+      !this.state.isEmailEmpty &&
+      !this.state.isNameEmpty
+    ) {
+      this.setState({ didFill: true });
+    }
   };
 
   onSubmit = e => {
     e.preventDefault();
 
-    const userData = {
-      email: this.state.email,
-      fullname: this.state.fullname,
-      password: this.state.password
-    };
+    this.setState({ didSubmit: true });
 
-    this.props.registerUser(userData, this.props.history);
+    if (this.state.didFill) {
+      const userData = {
+        email: this.state.email,
+        fullname: this.state.fullname,
+        password: this.state.password
+      };
+
+      this.props.registerUser(userData, this.props.history);
+    }
   };
 
   render() {
-    const { email, fullname, password } = this.state;
+    const {
+      email,
+      fullname,
+      password,
+      isNameEmpty,
+      isPasswordEmpty,
+      isUserEmpty,
+      didSubmit
+    } = this.state;
 
     return (
       <div className="container pt-5" style={{ marginBottom: "250px" }}>
@@ -52,42 +96,73 @@ class Signup extends Component {
             <form onSubmit={this.onSubmit} className="form-signin">
               <h1 className="h3 mb-5 display-4 text-center">Signup Here</h1>
 
-              <label for="inputUsername" className="sr-only">
-                Username
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="inputEmail"
-                className="form-control mb-3"
-                placeholder="Username"
-                value={email}
-                onChange={this.onChange}
-              />
-              <label for="inputPassword" className="sr-only">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="inputPassword"
-                className="form-control mb-3"
-                placeholder="Password"
-                value={password}
-                onChange={this.onChange}
-              />
-              <label for="inputFullname" className="sr-only">
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="fullname"
-                id="inputEmail"
-                className="form-control mb-5"
-                placeholder="Fullname"
-                value={fullname}
-                onChange={this.onChange}
-              />
+              <div className="mb-3">
+                <label for="inputUsername" className="sr-only">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="inputEmail"
+                  className={classnames("form-control", {
+                    "is-valid": !isUserEmpty && didSubmit,
+                    "is-invalid": isUserEmpty && didSubmit
+                  })}
+                  placeholder="Username"
+                  value={email}
+                  onChange={this.onChange}
+                />
+                {isUserEmpty ? (
+                  <div className="invalid-feedback">Please enter an email</div>
+                ) : null}
+              </div>
+
+              <div className="mb-3">
+                <label for="inputPassword" className="sr-only">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="inputPassword"
+                  className={classnames("form-control", {
+                    "is-valid": !isPasswordEmpty && didSubmit,
+                    "is-invalid": isPasswordEmpty && didSubmit
+                  })}
+                  placeholder="Password"
+                  value={password}
+                  onChange={this.onChange}
+                />
+                {isPasswordEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter a password
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="mb-5">
+                <label for="inputFullname" className="sr-only">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="fullname"
+                  id="inputEmail"
+                  className={classnames("form-control", {
+                    "is-valid": !isNameEmpty && didSubmit,
+                    "is-invalid": isNameEmpty && didSubmit
+                  })}
+                  placeholder="Fullname"
+                  value={fullname}
+                  onChange={this.onChange}
+                />
+                {isNameEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter a password
+                  </div>
+                ) : null}
+              </div>
+
               <button
                 className="btn btn-lg btn-primary btn-block mb-2"
                 type="submit"
