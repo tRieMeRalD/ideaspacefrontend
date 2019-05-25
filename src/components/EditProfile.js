@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import { updateProfile } from "../actions/userActions";
 
 class EditProfile extends Component {
@@ -18,7 +19,11 @@ class EditProfile extends Component {
       linkedin: "",
       facebook: "",
       github: "",
-      profiles: {}
+      profiles: {},
+      didSubmit: false,
+      didFill: false,
+      isPfpEmpty: true,
+      isBgPicEmpty: true
     };
 
     this.onChange = this.onChange.bind(this);
@@ -45,23 +50,43 @@ class EditProfile extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if (this.state.profilePic !== "" && this.state.didSubmit) {
+      this.setState({ isPfpEmpty: false });
+    } else {
+      this.setState({ isPfpEmpty: true });
+    }
+
+    if (this.state.bgPic !== "" && this.state.didSubmit) {
+      this.setState({ isBgPicEmpty: false });
+    } else {
+      this.setState({ isBgPicEmpty: true });
+    }
+
+    if (!this.state.isBgPicEmpty && !this.state.isPfpEmpty) {
+      this.setState({ didFill: true });
+    }
   };
 
   onSubmit(e) {
     e.preventDefault();
 
-    const updateData = {
-      profilePic: this.state.profilePic,
-      bgPic: this.state.bgPic,
-      bioInfo: this.state.bioInfo,
-      instagram: this.state.instagram,
-      github: this.state.github,
-      linkedin: this.state.linkedin,
-      facebook: this.state.facebook,
-      id: this.props.user.edit
-    };
+    this.setState({ didSubmit: true });
 
-    this.props.updateProfile(updateData, this.props.history);
+    if (this.state.didFill) {
+      const updateData = {
+        profilePic: this.state.profilePic,
+        bgPic: this.state.bgPic,
+        bioInfo: this.state.bioInfo,
+        instagram: this.state.instagram,
+        github: this.state.github,
+        linkedin: this.state.linkedin,
+        facebook: this.state.facebook,
+        id: this.props.user.edit
+      };
+
+      this.props.updateProfile(updateData, this.props.history);
+    }
   }
 
   render() {
@@ -72,7 +97,10 @@ class EditProfile extends Component {
       instagram,
       github,
       linkedin,
-      facebook
+      facebook,
+      isBgPicEmpty,
+      isPfpEmpty,
+      didSubmit
     } = this.state;
 
     return (
@@ -84,26 +112,40 @@ class EditProfile extends Component {
             <label for="profilePic">Profile picture URL</label>
             <input
               type="text"
-              className="form-control"
+              className={classnames("form-control", {
+                "is-valid": !isPfpEmpty && didSubmit,
+                "is-invalid": isPfpEmpty && didSubmit
+              })}
               id="profilePic"
               name="profilePic"
               value={profilePic}
               onChange={this.onChange}
               placeholder="Update your profile picture URL"
             />
+            {isPfpEmpty ? (
+              <div className="invalid-feedback">Please enter a profile URL</div>
+            ) : null}
           </div>
 
           <div className="form-group">
             <label for="bgPic">Background picture URL</label>
             <input
               type="text"
-              className="form-control"
+              className={classnames("form-control", {
+                "is-valid": !isBgPicEmpty && didSubmit,
+                "is-invalid": isBgPicEmpty && didSubmit
+              })}
               id="bgPic"
               name="bgPic"
               value={bgPic}
               onChange={this.onChange}
               placeholder="Update your background picture URL"
             />
+            {isBgPicEmpty ? (
+              <div className="invalid-feedback">
+                Please enter a background URL
+              </div>
+            ) : null}
           </div>
 
           <div className="form-group">

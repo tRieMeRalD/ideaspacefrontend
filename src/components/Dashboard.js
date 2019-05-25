@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 import { submitProfile, setEditProfile } from "../actions/userActions";
 
 class Dashboard extends Component {
@@ -17,7 +18,11 @@ class Dashboard extends Component {
       instagram: "",
       linkedin: "",
       facebook: "",
-      github: ""
+      github: "",
+      didSubmit: false,
+      didFill: false,
+      isPfpEmpty: true,
+      isBgPicEmpty: true
     };
   }
 
@@ -48,24 +53,44 @@ class Dashboard extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if (this.state.profilePic !== "" && this.state.didSubmit) {
+      this.setState({ isPfpEmpty: false });
+    } else {
+      this.setState({ isPfpEmpty: true });
+    }
+
+    if (this.state.bgPic !== "" && this.state.didSubmit) {
+      this.setState({ isBgPicEmpty: false });
+    } else {
+      this.setState({ isBgPicEmpty: true });
+    }
+
+    if (!this.state.isBgPicEmpty && !this.state.isPfpEmpty) {
+      this.setState({ didFill: true });
+    }
   };
 
   onSubmit = e => {
     e.preventDefault();
 
-    const profileData = {
-      profilePic: this.state.profilePic,
-      bgPic: this.state.bgPic,
-      bioInfo: this.state.bioInfo,
-      instagram: this.state.instagram,
-      github: this.state.github,
-      linkedin: this.state.linkedin,
-      facebook: this.state.facebook,
-      fullname: this.props.auth.fullname,
-      id: this.props.auth.users
-    };
+    this.setState({ didSubmit: true });
 
-    this.props.submitProfile(profileData, this.props.history);
+    if (this.state.didFill) {
+      const profileData = {
+        profilePic: this.state.profilePic,
+        bgPic: this.state.bgPic,
+        bioInfo: this.state.bioInfo,
+        instagram: this.state.instagram,
+        github: this.state.github,
+        linkedin: this.state.linkedin,
+        facebook: this.state.facebook,
+        fullname: this.props.auth.fullname,
+        id: this.props.auth.users
+      };
+
+      this.props.submitProfile(profileData, this.props.history);
+    }
   };
 
   render() {
@@ -76,7 +101,10 @@ class Dashboard extends Component {
       instagram,
       github,
       linkedin,
-      facebook
+      facebook,
+      isBgPicEmpty,
+      isPfpEmpty,
+      didSubmit
     } = this.state;
 
     return (
@@ -88,26 +116,40 @@ class Dashboard extends Component {
             <label for="profilePic">Profile picture URL</label>
             <input
               type="text"
-              className="form-control"
+              className={classnames("form-control", {
+                "is-valid": !isPfpEmpty && didSubmit,
+                "is-invalid": isPfpEmpty && didSubmit
+              })}
               id="profilePic"
               name="profilePic"
               value={profilePic}
               onChange={this.onChange}
               placeholder="Enter image address"
             />
+            {isPfpEmpty ? (
+              <div className="invalid-feedback">Please enter a profile URL</div>
+            ) : null}
           </div>
 
           <div className="form-group">
             <label for="bgPic">Background picture URL</label>
             <input
               type="text"
-              className="form-control"
+              className={classnames("form-control", {
+                "is-valid": !isBgPicEmpty && didSubmit,
+                "is-invalid": isBgPicEmpty && didSubmit
+              })}
               id="bgPic"
               name="bgPic"
               value={bgPic}
               onChange={this.onChange}
               placeholder="Enter image address"
             />
+            {isBgPicEmpty ? (
+              <div className="invalid-feedback">
+                Please enter a background URL
+              </div>
+            ) : null}
           </div>
 
           <div className="form-group">

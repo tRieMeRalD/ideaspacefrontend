@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 
 import { postSubmit } from "../actions/PostAction";
 import InputGroup from "./common/InputGroup";
@@ -22,7 +23,14 @@ class Create extends Component {
       hashtag: "",
       hashtags: "",
       imageURL: "",
-      errors: {}
+      errors: {},
+      didSubmit: false,
+      didFill: false,
+      isTitleEmpty: true,
+      isSubEmpty: true,
+      isBodyEmpty: true,
+      /* isHashtagEmpty: true, */
+      isImageEmpty: true
     };
 
     this.onChange = this.onChange.bind(this);
@@ -38,48 +46,104 @@ class Create extends Component {
   // Update HTMl fields
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if (this.state.title !== "" && this.state.didSubmit) {
+      this.setState({ isTitleEmpty: false });
+    } else {
+      this.setState({ isTitleEmpty: true });
+    }
+
+    if (this.state.subTitle !== "" && this.state.didSubmit) {
+      this.setState({ isSubEmpty: false });
+    } else {
+      this.setState({ isSubEmpty: true });
+    }
+
+    if (this.state.body !== "" && this.state.didSubmit) {
+      this.setState({ isBodyEmpty: false });
+    } else {
+      this.setState({ isBodyEmpty: true });
+    }
+
+    /*     if (this.state.hashtag !== "" && this.state.didSubmit) {
+      this.setState({ isHashtagEmpty: false });
+    } else {
+      this.setState({ isHashtagEmpty: true });
+    } */
+
+    if (this.state.imageURL !== "" && this.state.didSubmit) {
+      this.setState({ isImageEmpty: false });
+    } else {
+      this.setState({ isImageEmpty: true });
+    }
+
+    if (
+      !this.state.isTitleEmpty &&
+      !this.state.isSubEmpty &&
+      !this.state.isBodyEmpty &&
+      !this.state.isImageEmpty
+    ) {
+      this.setState({ didFill: true });
+    }
   };
 
   onSubmit = e => {
     e.preventDefault();
 
-    // Getting data from HTMl fields
-    const postData = {
-      name: this.props.auth.fullname,
-      title: this.state.title,
-      subTitle: this.state.subTitle,
-      body: this.state.body,
-      imageURL: this.state.imageURL,
-      hashtag: this.state.hashtag,
-      accountId: this.props.auth.users
-    };
+    this.setState({ didSubmit: true });
 
-    // Split string by ',' as indicated by instructions
-    var strHash = this.state.hashtag;
-    var arrHash = strHash.split(",");
+    if (this.state.didFill) {
+      // Getting data from HTMl fields
+      const postData = {
+        name: this.props.auth.fullname,
+        title: this.state.title,
+        subTitle: this.state.subTitle,
+        body: this.state.body,
+        imageURL: this.state.imageURL,
+        hashtag: this.state.hashtag,
+        accountId: this.props.auth.users
+      };
 
-    for (var i = 0; i <= arrHash.length; i++) {
-      if (arrHash[i] !== undefined || arrHash[i] !== "") {
-        // Append each hashtag to database
-        const hashData = {
-          accountId: this.props.auth.users,
-          hashtags: this.state.hashtags.concat(arrHash[i])
-        };
+      // Split string by ',' as indicated by instructions
+      var strHash = this.state.hashtag;
+      var arrHash = strHash.split(",");
 
-        // SAVE each hashtag to database
-        axios
-          .post("/hashtags", hashData)
-          .then(res => console.log("Tagged!"))
-          .catch(err => console.log(err));
+      for (var i = 0; i <= arrHash.length; i++) {
+        if (arrHash[i] !== undefined || arrHash[i] !== "") {
+          // Append each hashtag to database
+          const hashData = {
+            accountId: this.props.auth.users,
+            hashtags: this.state.hashtags.concat(arrHash[i])
+          };
+
+          // SAVE each hashtag to database
+          axios
+            .post("/hashtags", hashData)
+            .then(res => console.log("Tagged!"))
+            .catch(err => console.log(err));
+        }
       }
-    }
 
-    // Submit
-    this.props.postSubmit(postData, this.props.history);
+      // Submit
+      this.props.postSubmit(postData, this.props.history);
+    }
   };
 
   render() {
-    const { title, subTitle, body, imageURL, errors, hashtag } = this.state;
+    const {
+      title,
+      subTitle,
+      body,
+      imageURL,
+      errors,
+      hashtag,
+      isBodyEmpty,
+      /* isHashtagEmpty, */
+      isImageEmpty,
+      isSubEmpty,
+      isTitleEmpty,
+      didSubmit
+    } = this.state;
 
     return (
       <div className="container pb-5">
@@ -94,7 +158,10 @@ class Create extends Component {
                   labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                   forAttr="grid-title"
                   labelTitle="Article Title"
-                  inputClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  inputClassName={classnames("form-control", {
+                    "is-valid": !isTitleEmpty && didSubmit,
+                    "is-invalid": isTitleEmpty && didSubmit
+                  })}
                   id="grid-title"
                   type="text"
                   placeholder="Enter title here ..."
@@ -103,21 +170,34 @@ class Create extends Component {
                   onChange={this.onChange}
                   error={errors.title}
                 />
+                {isTitleEmpty ? (
+                  <div className="invalid-feedback">Please enter a title</div>
+                ) : null}
 
-                <InputGroup
-                  divClassName="w-full md:w-1/2 px-3"
-                  labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                  forAttr="grid-subTitle"
-                  labelTitle="Article Caption"
-                  inputClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                  id="grid-subTitle"
-                  type="text"
-                  placeholder="Enter sub-title ..."
-                  name="subTitle"
-                  value={subTitle}
-                  onChange={this.onChange}
-                  error={errors.subTitle}
-                />
+                <div>
+                  <InputGroup
+                    divClassName="" /* "w-full md:w-1/2 px-3" */
+                    labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                    forAttr="grid-subTitle"
+                    labelTitle="Article Caption"
+                    inputClassName={classnames("form-control", {
+                      "is-valid": !isSubEmpty && didSubmit,
+                      "is-invalid": isSubEmpty && didSubmit
+                    })}
+                    id="grid-subTitle"
+                    type="text"
+                    placeholder="Enter sub-title ..."
+                    name="subTitle"
+                    value={subTitle}
+                    onChange={this.onChange}
+                    error={errors.subTitle}
+                  />
+                  {isSubEmpty ? (
+                    <div className="invalid-feedback">
+                      Please enter a subtitle
+                    </div>
+                  ) : null}
+                </div>
               </div>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <TextAreaGroup
@@ -125,7 +205,10 @@ class Create extends Component {
                   labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                   forAttr="grid-body"
                   labelTitle="Article Body"
-                  textAreaClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                  textAreaClassName={classnames("form-control", {
+                    "is-valid": !isBodyEmpty && didSubmit,
+                    "is-invalid": isBodyEmpty && didSubmit
+                  })}
                   id="grid-body"
                   type="text"
                   placeholder="Enter article body ..."
@@ -135,6 +218,11 @@ class Create extends Component {
                   onChange={this.onChange}
                   error={errors.body}
                 />
+                {isBodyEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter some article text
+                  </div>
+                ) : null}
               </div>
 
               <div className="flex flex-wrap -mx-3 mb-6 mt-4">
@@ -163,7 +251,10 @@ class Create extends Component {
                   labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                   forAttr="grid-image"
                   labelTitle="Image"
-                  inputClassName="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                  inputClassName={classnames("form-control", {
+                    "is-valid": !isImageEmpty && didSubmit,
+                    "is-invalid": isImageEmpty && didSubmit
+                  })}
                   id="grid-image"
                   type="text"
                   placeholder="Enter image URL ..."
@@ -172,6 +263,11 @@ class Create extends Component {
                   onChange={this.onChange}
                   error={errors.imageURL}
                 />
+                {isImageEmpty ? (
+                  <div className="invalid-feedback">
+                    Please enter an image URL
+                  </div>
+                ) : null}
               </div>
               <button
                 type="submit"
