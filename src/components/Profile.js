@@ -18,6 +18,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    // GET all profiles from database
     axios
       .get("/profile")
       .then(res => {
@@ -25,6 +26,7 @@ class Profile extends Component {
       })
       .catch(err => console.log(err));
 
+    // GET all posts from database
     axios
       .get("/posts")
       .then(res => {
@@ -34,14 +36,17 @@ class Profile extends Component {
   }
 
   onClick = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Cycle through profiles and check if matches the account ID
     this.state.profile.map(p => {
       if (p.id === this.props.auth.users) {
-        this.props.setEditProfile(p.accountId);
+        this.props.setEditProfile(p.accountId); // Set account ID to an edit global variable
       }
     });
 
+    // Redirect to profile by the account ID
     axios
       .get("/profile")
       .then(res =>

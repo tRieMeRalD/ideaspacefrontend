@@ -33,8 +33,10 @@ class Signup extends Component {
   }
 
   onChange = e => {
+    // Update states
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check empty
     if (this.state.email !== "" && this.state.didSubmit) {
       this.setState({ isUserEmpty: false });
     } else {
@@ -53,6 +55,7 @@ class Signup extends Component {
       this.setState({ isNameEmpty: true });
     }
 
+    // Check if filled
     if (
       !this.state.isPasswordEmpty &&
       !this.state.isEmailEmpty &&
@@ -63,10 +66,13 @@ class Signup extends Component {
   };
 
   onSubmit = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Submit button triggered
     this.setState({ didSubmit: true });
 
+    // Check if filled && save data
     if (this.state.didFill) {
       const userData = {
         email: this.state.email,
@@ -74,6 +80,7 @@ class Signup extends Component {
         password: this.state.password
       };
 
+      // Submit
       this.props.registerUser(userData, this.props.history);
     }
   };

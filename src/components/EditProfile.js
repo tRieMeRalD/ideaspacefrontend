@@ -31,7 +31,7 @@ class EditProfile extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.user.edit);
+    // Get profile by ID && set states
     axios
       .get(`/profile/${this.props.user.edit}`)
       .then(res => {
@@ -49,8 +49,10 @@ class EditProfile extends Component {
   }
 
   onChange = e => {
+    // Update states
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check if empty
     if (this.state.profilePic !== "" && this.state.didSubmit) {
       this.setState({ isPfpEmpty: false });
     } else {
@@ -63,16 +65,20 @@ class EditProfile extends Component {
       this.setState({ isBgPicEmpty: true });
     }
 
+    // Check if all filled
     if (!this.state.isBgPicEmpty && !this.state.isPfpEmpty) {
       this.setState({ didFill: true });
     }
   };
 
   onSubmit(e) {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Submit button triggered
     this.setState({ didSubmit: true });
 
+    // Update data only if filled
     if (this.state.didFill) {
       const updateData = {
         profilePic: this.state.profilePic,
@@ -85,6 +91,7 @@ class EditProfile extends Component {
         id: this.props.user.edit
       };
 
+      // Update
       this.props.updateProfile(updateData, this.props.history);
     }
   }

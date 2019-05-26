@@ -4,9 +4,10 @@ import { GET_ERRORS, GET_LIKES } from "./types";
 // Create comment
 export const commentSubmit = (commentData, history) => dispatch => {
   axios
-    .post(`/comments/${commentData.postId}`, commentData)
-    .then(res => history.push("/posts"))
+    .post(`/comments/${commentData.postId}`, commentData) // Send along data to database
+    .then(res => history.push("/posts")) // Redirect if HTML 200
     .catch(err =>
+      // If error --> send redux request to display errors
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data

@@ -16,6 +16,7 @@ class ShowProfileID extends Component {
   }
 
   componentDidMount() {
+    // GET all posts
     axios
       .get("/posts")
       .then(res => {
@@ -23,6 +24,7 @@ class ShowProfileID extends Component {
       })
       .catch(err => console.log(err));
 
+    // GET profile info by setProfileLink value
     axios.get(`/profile/${this.props.post.profileId}`).then(res => {
       this.setState({ profile: res.data });
     });

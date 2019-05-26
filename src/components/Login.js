@@ -29,20 +29,24 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    // If logged in redirect
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    // If logged in redirect
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
   }
 
   onChange = e => {
+    // Update states
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check empty
     if (this.state.email !== "" && this.state.didSubmit) {
       this.setState({ isEmailEmpty: false });
     } else {
@@ -55,17 +59,22 @@ class Login extends Component {
       this.setState({ isPasswordEmpty: true });
     }
 
+    // Check if filled
     if (!this.state.isPasswordEmpty && !this.state.isEmailEmpty) {
       this.setState({ didFill: true });
     }
   };
 
   onSubmit = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Submit button triggered
     this.setState({ didSubmit: true });
 
+    // Check if filled
     if (this.state.didFill) {
+      // GET all the users from database
       axios
         .get("/users")
         .then(res => {
@@ -73,18 +82,21 @@ class Login extends Component {
         })
         .catch(err => console.log(err));
 
+      // Cycle through users and check if email entered == the email in the database
       this.state.users.map(u => {
         if (u.email.trim() === this.state.email) {
-          this.props.setAccId(u.id);
-          this.props.setFullname(u.fullname);
+          this.props.setAccId(u.id); // Set accountID as global variable
+          this.props.setFullname(u.fullname); // Set name as global variable
         }
       });
 
+      // Set user info for login properties
       const userData = {
         email: this.state.email,
         password: this.state.password
       };
 
+      // Submit
       this.props.loginUser(userData);
     }
   };

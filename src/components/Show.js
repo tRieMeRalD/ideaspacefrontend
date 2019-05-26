@@ -25,58 +25,66 @@ class Show extends Component {
   }
 
   componentDidMount() {
+    // GET post by ID
     axios.get("/posts/" + this.props.match.params.id).then(res => {
       this.setState({ post: res.data });
     });
 
+    // GET all comments from database
     axios.get("/comments").then(res => {
       this.setState({ comments: res.data });
     });
 
+    // GET all profiles from database
     axios.get("/profile").then(res => {
       this.setState({ profiles: res.data });
     });
 
+    // GET all posts
     axios.get("/posts").then(res => {
       this.setState({ posts: res.data });
     });
   }
 
   componentWillReceiveProps(nextProps) {
+    // Cycle through errors
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
-    // TODO ISEMPTY
   }
 
   onChange = e => {
+    // Update states
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onSubmit = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Save data info fir comments
     const commentData = {
       comment: this.state.comment,
       postId: this.props.match.params.id,
       accountId: this.props.auth.users
     };
 
+    // Submit comment
     this.props.commentSubmit(commentData, this.props.history);
   };
 
   onClick = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Cycle through the profiles
     this.state.profiles.map(p => {
       if (p.id === this.state.post.accountId) {
-        this.props.setProfileLink(p.accountId);
+        this.props.setProfileLink(p.accountId); // This is to allow users to click on individual profiles
       }
-      console.log(p.id);
-      console.log(p.accountId);
     });
 
+    // Redirect to profile using the setProfileLink return value
     axios
       .get("/profile")
       .then(res => {
@@ -87,12 +95,14 @@ class Show extends Component {
 
   onDeleteClick = id => {
     // TODO ~ FIX HISTORY PUSH ROUTE
+    // Delete
     axios
       .delete(`/comments/${id}`)
       .then(res => this.props.history.push("/post"))
       .catch(err => console.log(err));
   };
 
+  // TODO ~ fix like function
   onLikeClick = id => {
     axios
       .put(`/comments/${id}`)

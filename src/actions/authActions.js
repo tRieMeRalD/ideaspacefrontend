@@ -6,9 +6,9 @@ import { SET_CURRENT_USER, SET_ACCOUNT_ID, SET_NAME } from "./types";
 
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/auth/register", userData)
+    .post("/api/auth/register", userData) // Send along data to database
     .then(res => {
-      history.push("/login");
+      history.push("/login"); // Redirect to login if HTML 200
     })
     .catch(err => console.log(err));
 };
@@ -30,25 +30,26 @@ export const loginUser = userData => dispatch => {
 export const setAccId = accountId => {
   return {
     type: SET_ACCOUNT_ID,
-    payload: accountId
+    payload: accountId // Send this value to redux manager
   };
 };
 
 export const setFullname = fullname => {
   return {
     type: SET_NAME,
-    payload: fullname
+    payload: fullname // Send this value to redux manager
   };
 };
 
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: decoded // Send this value to redux manager
   };
 };
 
 export const logoutUser = history => dispatch => {
+  // Erase the jwtToken that keeps the user logged in
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser());

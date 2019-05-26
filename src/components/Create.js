@@ -29,7 +29,6 @@ class Create extends Component {
       isTitleEmpty: true,
       isSubEmpty: true,
       isBodyEmpty: true,
-      /* isHashtagEmpty: true, */
       isImageEmpty: true
     };
 
@@ -38,6 +37,7 @@ class Create extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Updates error fields
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -45,8 +45,10 @@ class Create extends Component {
 
   // Update HTMl fields
   onChange = e => {
+    // Updates state when detects input
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check states if empty --> if not update boolean
     if (this.state.title !== "" && this.state.didSubmit) {
       this.setState({ isTitleEmpty: false });
     } else {
@@ -65,18 +67,13 @@ class Create extends Component {
       this.setState({ isBodyEmpty: true });
     }
 
-    /*     if (this.state.hashtag !== "" && this.state.didSubmit) {
-      this.setState({ isHashtagEmpty: false });
-    } else {
-      this.setState({ isHashtagEmpty: true });
-    } */
-
     if (this.state.imageURL !== "" && this.state.didSubmit) {
       this.setState({ isImageEmpty: false });
     } else {
       this.setState({ isImageEmpty: true });
     }
 
+    // If everything is filled update boolean
     if (
       !this.state.isTitleEmpty &&
       !this.state.isSubEmpty &&
@@ -88,8 +85,10 @@ class Create extends Component {
   };
 
   onSubmit = e => {
+    // Disable button function
     e.preventDefault();
 
+    // Set boolean that submit button was triggered
     this.setState({ didSubmit: true });
 
     if (this.state.didFill) {
@@ -138,7 +137,6 @@ class Create extends Component {
       errors,
       hashtag,
       isBodyEmpty,
-      /* isHashtagEmpty, */
       isImageEmpty,
       isSubEmpty,
       isTitleEmpty,
@@ -176,7 +174,7 @@ class Create extends Component {
 
                 <div>
                   <InputGroup
-                    divClassName="" /* "w-full md:w-1/2 px-3" */
+                    divClassName=""
                     labelClassName="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                     forAttr="grid-subTitle"
                     labelTitle="Article Caption"

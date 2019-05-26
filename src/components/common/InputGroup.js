@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// Template for the input fields
 const InputGroup = ({
   divClassName,
   labelClassName,

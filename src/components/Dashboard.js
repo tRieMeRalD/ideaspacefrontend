@@ -52,8 +52,10 @@ class Dashboard extends Component {
   }
 
   onChange = e => {
+    // Update state when input detected
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check if states are empty --> update boolean
     if (this.state.profilePic !== "" && this.state.didSubmit) {
       this.setState({ isPfpEmpty: false });
     } else {
@@ -66,6 +68,7 @@ class Dashboard extends Component {
       this.setState({ isBgPicEmpty: true });
     }
 
+    // Check if states are all filled
     if (!this.state.isBgPicEmpty && !this.state.isPfpEmpty) {
       this.setState({ didFill: true });
     }
@@ -74,8 +77,10 @@ class Dashboard extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    // Update when button triggered
     this.setState({ didSubmit: true });
 
+    // Check if all fields are filled
     if (this.state.didFill) {
       const profileData = {
         profilePic: this.state.profilePic,
@@ -89,6 +94,7 @@ class Dashboard extends Component {
         id: this.props.auth.users
       };
 
+      // Submit
       this.props.submitProfile(profileData, this.props.history);
     }
   };

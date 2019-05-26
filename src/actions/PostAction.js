@@ -9,13 +9,13 @@ export const getCurrentPost = id => dispatch => {
     .then(res =>
       dispatch({
         type: GET_POST,
-        payload: res.data
+        payload: res.data // Send this value to redux manager
       })
     )
     .catch(err =>
       dispatch({
         type: GET_POST,
-        payload: {}
+        payload: {} // Empty --> don't want to render anything
       })
     );
 };
@@ -23,7 +23,7 @@ export const getCurrentPost = id => dispatch => {
 export const setProfileLink = profileId => {
   return {
     type: SET_PROFILE_ID,
-    payload: profileId
+    payload: profileId // Send this value to redux manager
   };
 };
 
@@ -35,7 +35,7 @@ export const postSubmit = (postData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data // Send this value to redux manager
       })
     );
 };
@@ -50,7 +50,7 @@ export const editPost = (editData, history) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data // Send this value to redux manager
       })
     );
 };

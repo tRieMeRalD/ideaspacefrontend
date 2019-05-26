@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 class Logout extends Component {
   componentDidMount() {
+    // Removes user info and redirects
     this.props.clearCurrentProfile();
     this.props.logoutUser();
   }

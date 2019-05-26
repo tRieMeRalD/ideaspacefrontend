@@ -34,14 +34,17 @@ class Edit extends Component {
   }
 
   componentDidMount() {
+    // Pull current post requested
     this.props.getCurrentPost(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
+    // Check for errors
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
 
+    // Updates state with post information
     if (nextProps.post.post) {
       const post = nextProps.post.post;
 
@@ -59,8 +62,10 @@ class Edit extends Component {
   }
 
   onChange = e => {
+    // Update state
     this.setState({ [e.target.name]: e.target.value });
 
+    // Check for empty --> update boolean accordingly
     if (this.state.title !== "" && this.state.didSubmit) {
       this.setState({ isTitleEmpty: false });
     } else {
@@ -85,6 +90,7 @@ class Edit extends Component {
       this.setState({ isImageEmpty: true });
     }
 
+    // Check if filled
     if (
       !this.state.isTitleEmpty &&
       !this.state.isSubEmpty &&
@@ -96,10 +102,13 @@ class Edit extends Component {
   };
 
   onSubmit = e => {
+    // Prevent button functionality
     e.preventDefault();
 
+    // Update --> submit was triggered
     this.setState({ didSubmit: true });
 
+    // Check if all fields are filled
     if (this.state.didFill) {
       const editData = {
         name: this.props.auth.fullname,
@@ -111,11 +120,13 @@ class Edit extends Component {
         id: this.state.id
       };
 
+      // Update
       this.props.editPost(editData, this.props.history);
     }
   };
 
   delete(id) {
+    // Delete
     this.props.deletePost(id, this.props.history);
   }
 
