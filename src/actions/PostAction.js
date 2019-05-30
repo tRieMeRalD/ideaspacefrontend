@@ -31,7 +31,7 @@ export const setProfileLink = profileId => {
 export const postSubmit = (postData, history) => dispatch => {
   axios
     .post(`/posts/${postData.accountId}`, postData)
-    .then(res => history.push("/post"))
+    .then(res => history.push("/posts"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

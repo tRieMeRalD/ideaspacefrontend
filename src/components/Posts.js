@@ -73,10 +73,8 @@ class Posts extends Component {
       },
       () => console.log(this.state.hashFilter)
     );
-  }
 
-  // Cycles through hashFilter
-  onLoadFilter() {
+    // Cycles through hashFilter
     this.state.hashFilter.map(h => {
       this.state.tags[0].split(", ").map(t => {
         if (h === t) {
@@ -173,13 +171,6 @@ class Posts extends Component {
                   className="btn btn-outline-success mt-2 mb-2"
                 >
                   Submit
-                </button>
-
-                <button
-                  onClick={this.onLoadFilter.bind(this)}
-                  className="btn btn-outline-primary mt-2 mb-2"
-                >
-                  Filter
                 </button>
 
                 <p className="text-muted">

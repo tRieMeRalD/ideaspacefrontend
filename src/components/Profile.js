@@ -57,152 +57,153 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className="container pt-5">
-        {this.state.profile.map(p => (
-          <div>
-            {this.state.profile === undefined ? (
-              <p className="lead pt-5 pb-3">
-                No profile, create one <Link to="/dashboard">here</Link>
-              </p>
-            ) : (
-              <div>
-                {this.props.auth.users === p.id ? (
-                  <div>
-                    <div className="fb-profile">
-                      <img
-                        align="left"
-                        className="fb-image-lg"
-                        src={`${p.bgPic}`}
-                        alt="background"
-                      />
-                      <img
-                        align="left"
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                          borderColor: "white"
-                        }}
-                        src={`${p.profilePic}`}
-                        className="rounded-circle fb-image-profile thumbnail"
-                        alt="Profile"
-                      />
-                      <div className="pl-2">
-                        <div className="fb-profile-text">
-                          <p className="font-weight-bold">
-                            {this.props.auth.fullname}
-                          </p>
-                          <p className="lead pt-2 pb-1">{p.bioInfo}</p>
-                        </div>
+      <div className="container pt-5" style={{ marginBottom: "200px" }}>
+        <div>
+          {this.state.profile.map(p => (
+            <div>
+              {this.props.auth.users === p.id ? (
+                <div>
+                  <div className="fb-profile">
+                    <img
+                      align="left"
+                      className="fb-image-lg"
+                      src={`${p.bgPic}`}
+                      alt="background"
+                    />
+                    <img
+                      align="left"
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        borderColor: "white"
+                      }}
+                      src={`${p.profilePic}`}
+                      className="rounded-circle fb-image-profile thumbnail"
+                      alt="Profile"
+                    />
+                    <div className="pl-2">
+                      <div className="fb-profile-text">
+                        <p className="font-weight-bold">
+                          {this.props.auth.fullname}
+                        </p>
+                        <p className="lead pt-2 pb-1">{p.bioInfo}</p>
                       </div>
                     </div>
-
-                    <button onClick={this.onClick}>
-                      Edit Profile <i class="fas fa-pencil-alt" />
-                    </button>
-
-                    <hr className="mt-5 pb-2" />
-
-                    <p className="text-center">
-                      {p.facebook != null ? (
-                        <a
-                          className="fb-ic"
-                          href={`${p.facebook}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x">
-                            {" "}
-                          </i>
-                        </a>
-                      ) : null}
-
-                      {p.instagram != null ? (
-                        <a
-                          className="ig-ic"
-                          href={`${p.instagram}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          <i className="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x">
-                            {" "}
-                          </i>
-                        </a>
-                      ) : null}
-
-                      {p.linkedin != null ? (
-                        <a
-                          className="li-ic"
-                          href={`${p.linkedin}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          <i className="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x">
-                            {" "}
-                          </i>
-                        </a>
-                      ) : null}
-
-                      {p.github != null ? (
-                        <a
-                          className="gh-ic"
-                          href={`${p.github}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          <i className="fab fa-github fa-lg white-text mr-md-5 mr-3 fa-2x">
-                            {" "}
-                          </i>
-                        </a>
-                      ) : null}
-                    </p>
                   </div>
-                ) : null}
-              </div>
-            )}
-          </div>
-        ))}
+
+                  <button onClick={this.onClick}>
+                    Edit Profile <i class="fas fa-pencil-alt" />
+                  </button>
+
+                  <hr className="mt-5 pb-2" />
+
+                  <p className="text-center">
+                    {p.facebook != null ? (
+                      <a
+                        className="fb-ic"
+                        href={`${p.facebook}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <i className="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x">
+                          {" "}
+                        </i>
+                      </a>
+                    ) : null}
+
+                    {p.instagram != null ? (
+                      <a
+                        className="ig-ic"
+                        href={`${p.instagram}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <i className="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x">
+                          {" "}
+                        </i>
+                      </a>
+                    ) : null}
+
+                    {p.linkedin != null ? (
+                      <a
+                        className="li-ic"
+                        href={`${p.linkedin}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <i className="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x">
+                          {" "}
+                        </i>
+                      </a>
+                    ) : null}
+
+                    {p.github != null ? (
+                      <a
+                        className="gh-ic"
+                        href={`${p.github}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <i className="fab fa-github fa-lg white-text mr-md-5 mr-3 fa-2x">
+                          {" "}
+                        </i>
+                      </a>
+                    ) : null}
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          ))}
+          {/* If there's a profile match, this shouldn't execute,
+              If there isn't, then this should run and say create a profile
+          */}
+          {this.state.bioInfo === "" || this.state.bioInfo === undefined ? (
+            <h1 className="display-4 pt-5 pb-3">
+              No profile, create one <Link to="/dashboard">here</Link>
+            </h1>
+          ) : null}
+        </div>
 
         <hr className="pt-2" />
-        <h2 className="font-weight-bold pt-1 pb-3">
-          {this.props.auth.fullname}'s article feed:
-        </h2>
 
-        {this.state.posts.map(p => (
+        {this.state.posts.length === undefined ? (
+          <p className="lead pt-5 pb-3">
+            No posts, create one <Link to="/create">here</Link>
+          </p>
+        ) : (
           <div>
-            {this.state.posts.length === undefined ? (
-              <p className="lead pt-5 pb-3">
-                No posts, create one <Link to="/create">here</Link>
-              </p>
-            ) : (
+            <h2 className="font-weight-bold pt-1 pb-3">
+              {this.props.auth.fullname}'s article feed:
+            </h2>
+
+            {this.state.posts.map(p => (
               <div>
-                {this.props.auth.users === p.accountId ? (
-                  <div>
-                    <Link to={`/show/${p.id}`}>
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "500px",
-                          display: "block"
-                        }}
-                        className="mr-auto ml-auto"
-                        src={`${p.imageURL}`}
-                        alt="thumbnail"
-                      />
-                    </Link>
-                    <h3 className="font-weight-bold pt-2">{p.title}</h3>
-                    <p className="lead pt-1">{p.subTitle}</p>
-                    <p className="text-muted pt-3">Created by: {p.name}</p>
-                    <hr className="pt-2 pb-3" />
-                  </div>
-                ) : (
-                  <p className="lead pt-5 pb-3">
-                    No posts, create one <Link to="/create">here</Link>
-                  </p>
-                )}
+                <div>
+                  {this.props.auth.users === p.accountId ? (
+                    <div>
+                      <Link to={`/show/${p.id}`}>
+                        <img
+                          style={{
+                            width: "100%",
+                            height: "500px",
+                            display: "block"
+                          }}
+                          className="mr-auto ml-auto"
+                          src={`${p.imageURL}`}
+                          alt="thumbnail"
+                        />
+                      </Link>
+                      <h3 className="font-weight-bold pt-2">{p.title}</h3>
+                      <p className="lead pt-1">{p.subTitle}</p>
+                      <p className="text-muted pt-3">Created by: {p.name}</p>
+                      <hr className="pt-2 pb-3" />
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            )}
+            ))}
           </div>
-        ))}
+        )}
       </div>
     );
   }

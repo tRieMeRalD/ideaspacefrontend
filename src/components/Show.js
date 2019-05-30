@@ -94,19 +94,22 @@ class Show extends Component {
   };
 
   onDeleteClick = id => {
-    // TODO ~ FIX HISTORY PUSH ROUTE
     // Delete
     axios
       .delete(`/comments/${id}`)
-      .then(res => this.props.history.push("/post"))
+      .then(res =>
+        this.props.history.push(`/show/${this.props.match.params.id}`)
+      )
       .catch(err => console.log(err));
   };
 
-  // TODO ~ fix like function
   onLikeClick = id => {
+    // Update like counter
     axios
       .put(`/comments/${id}`)
-      .then(res => this.props.history.push("/post"))
+      .then(res =>
+        this.props.history.push(`/show/${this.props.match.params.id}`)
+      )
       .catch(err => console.log(err));
   };
 
