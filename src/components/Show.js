@@ -7,8 +7,12 @@ import { connect } from "react-redux";
 import TextAreaGroup from "./common/TextAreaGroup";
 
 import { commentSubmit } from "../actions/CommentActions";
-/* import { addLike, removeLike } from "../actions/CommentActions"; */
-import { setProfileLink } from "../actions/PostAction";
+import { addLike } from "../actions/CommentActions";
+import {
+  setProfileLink,
+  setEditDone,
+  setCreateDone
+} from "../actions/PostAction";
 
 class Show extends Component {
   constructor(props) {
@@ -23,6 +27,15 @@ class Show extends Component {
 
     this.onChange = this.onChange.bind(this);
   }
+
+  onClose = () => {
+    window.addEventListener("beforeunload", e => {
+      e.preventDefault();
+      return (
+        this.props.post.setEditDone(false), this.props.post.setCreateDone(false)
+      );
+    });
+  };
 
   componentDidMount() {
     // GET post by ID
@@ -44,6 +57,9 @@ class Show extends Component {
     axios.get("/posts").then(res => {
       this.setState({ posts: res.data });
     });
+
+    // On close window
+    this.onClose();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +78,7 @@ class Show extends Component {
     // Prevent button functionality
     e.preventDefault();
 
-    // Save data info fir comments
+    // Save data info for comments
     const commentData = {
       comment: this.state.comment,
       postId: this.props.match.params.id,
@@ -124,6 +140,23 @@ class Show extends Component {
           alt=""
         />
         <div className="container" style={{ marginBottom: "400px" }}>
+          {this.props.post.setEditDone || this.props.post.setCreateDone ? (
+            <div
+              className="alert alert-success alert-dismissible fade show mt-2 mb-2"
+              role="alert"
+            >
+              <strong>Success! Your post has been updated!</strong>
+              <button
+                className="close"
+                type="button"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          ) : null}
+
           <p className="text-muted text-center font-italic pt-2">
             {this.state.post.subTitle}
           </p>
@@ -240,8 +273,10 @@ Show.propTypes = {
   commentSubmit: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
-  setProfileLink: PropTypes.func.isRequired
-  /* addLike: PropTypes.func.isRequired, */
+  setProfileLink: PropTypes.func.isRequired,
+  addLike: PropTypes.func.isRequired,
+  setEditDone: PropTypes.func.isRequired,
+  setCreateDone: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -252,5 +287,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { commentSubmit, setProfileLink /* addLike, */ }
+  { commentSubmit, setProfileLink, addLike, setEditDone, setCreateDone }
 )(Show);

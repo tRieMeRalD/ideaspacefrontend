@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CLEAR_CURRENT_PROFILE, SET_EDIT_ID } from "./types";
+import { CLEAR_CURRENT_PROFILE, SET_EDIT_ID, SET_PROFILE_DONE } from "./types";
 
 export const submitProfile = (profileData, history) => dispatch => {
   axios
@@ -20,6 +20,13 @@ export const setEditProfile = profileId => {
   return {
     type: SET_EDIT_ID,
     payload: profileId
+  };
+};
+
+export const setEditProfileDone = profileDone => {
+  return {
+    type: SET_PROFILE_DONE,
+    payload: profileDone
   };
 };
 

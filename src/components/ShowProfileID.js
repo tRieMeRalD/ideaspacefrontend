@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { setEditProfileDone } from "../actions/userActions";
 import axios from "axios";
 
 class ShowProfileID extends Component {
@@ -14,6 +15,13 @@ class ShowProfileID extends Component {
       profiles: []
     };
   }
+
+  onClose = () => {
+    window.addEventListener("beforeunload", e => {
+      e.preventDefault();
+      return this.props.setEditProfileDone(false);
+    });
+  };
 
   componentDidMount() {
     // GET all posts
@@ -28,6 +36,8 @@ class ShowProfileID extends Component {
     axios.get(`/profile/${this.props.post.profileId}`).then(res => {
       this.setState({ profile: res.data });
     });
+
+    this.onClose();
   }
 
   render() {
@@ -35,6 +45,23 @@ class ShowProfileID extends Component {
 
     return (
       <div className="container pt-5">
+        {this.props.post.setEditDone ? (
+          <div
+            className="alert alert-success alert-dismissible fade show mt-2 mb-2"
+            role="alert"
+          >
+            <strong>Success! Your profile has been updated!</strong>
+            <button
+              className="close"
+              type="button"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        ) : null}
+
         <div>
           <div className="fb-profile">
             <img
@@ -163,7 +190,8 @@ class ShowProfileID extends Component {
 ShowProfileID.propTypes = {
   auth: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  setEditProfileDone: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -172,4 +200,7 @@ const mapStateToProps = state => ({
   post: state.post
 });
 
-export default connect(mapStateToProps)(ShowProfileID);
+export default connect(
+  mapStateToProps,
+  { setEditProfileDone }
+)(ShowProfileID);

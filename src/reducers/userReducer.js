@@ -1,8 +1,13 @@
-import { CLEAR_CURRENT_PROFILE, SET_EDIT_ID } from "../actions/types";
+import {
+  CLEAR_CURRENT_PROFILE,
+  SET_EDIT_ID,
+  SET_PROFILE_DONE
+} from "../actions/types";
 
 const initialState = {
   admin: null,
-  edit: ""
+  edit: "",
+  setProfileDone: false
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +21,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         edit: action.payload
+      };
+    case SET_PROFILE_DONE:
+      return {
+        ...state,
+        setProfileDone: action.payload
       };
     default:
       return state;

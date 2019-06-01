@@ -4,7 +4,12 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import { editPost, deletePost, getCurrentPost } from "../actions/PostAction";
+import {
+  editPost,
+  deletePost,
+  getCurrentPost,
+  setEditDone
+} from "../actions/PostAction";
 import InputGroup from "./common/InputGroup";
 import TextAreaGroup from "./common/TextAreaGroup";
 
@@ -120,6 +125,9 @@ class Edit extends Component {
         id: this.state.id
       };
 
+      // Success message
+      this.props.setEditDone(true);
+
       // Update
       this.props.editPost(editData, this.props.history);
     }
@@ -133,7 +141,6 @@ class Edit extends Component {
   render() {
     const {
       errors,
-      name,
       title,
       subTitle,
       body,
@@ -290,6 +297,7 @@ Edit.propTypes = {
   editPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
   getCurrentPost: PropTypes.func.isRequired,
+  setEditDone: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
@@ -303,5 +311,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editPost, deletePost, getCurrentPost }
+  { editPost, deletePost, getCurrentPost, setEditDone }
 )(withRouter(Edit));

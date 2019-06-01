@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import { postSubmit } from "../actions/PostAction";
+import { postSubmit, setCreateDone } from "../actions/PostAction";
 import InputGroup from "./common/InputGroup";
 import TextAreaGroup from "./common/TextAreaGroup";
 
@@ -170,6 +170,9 @@ class Create extends Component {
         }
       }
 
+      // For success message
+      this.props.setCreateDone(true);
+
       // Submit
       this.props.postSubmit(postData, this.props.history);
     }
@@ -334,6 +337,7 @@ class Create extends Component {
 
 Create.propTypes = {
   postSubmit: PropTypes.func.isRequired,
+  setCreateDone: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -345,5 +349,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { postSubmit }
+  { postSubmit, setCreateDone }
 )(withRouter(Create));

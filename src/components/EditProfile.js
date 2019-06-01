@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { updateProfile } from "../actions/userActions";
+import { updateProfile, setEditProfileDone } from "../actions/userActions";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -90,6 +90,9 @@ class EditProfile extends Component {
         facebook: this.state.facebook,
         id: this.props.user.edit
       };
+
+      // For success message
+      this.props.setEditProfileDone(true);
 
       // Update
       this.props.updateProfile(updateData, this.props.history);
@@ -254,7 +257,8 @@ class EditProfile extends Component {
 EditProfile.propTypes = {
   auth: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  updateProfile: PropTypes.func.isRequired
+  updateProfile: PropTypes.func.isRequired,
+  setEditProfileDone: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -264,5 +268,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { updateProfile }
+  { updateProfile, setEditProfileDone }
 )(EditProfile);

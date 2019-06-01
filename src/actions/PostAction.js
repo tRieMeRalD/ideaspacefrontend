@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_POST, SET_PROFILE_ID } from "./types";
+import {
+  GET_ERRORS,
+  GET_POST,
+  SET_PROFILE_ID,
+  SET_EDIT_DONE,
+  SET_CREATE_DONE
+} from "./types";
 
 // Get post
 export const getCurrentPost = id => dispatch => {
@@ -24,6 +30,20 @@ export const setProfileLink = profileId => {
   return {
     type: SET_PROFILE_ID,
     payload: profileId // Send this value to redux manager
+  };
+};
+
+export const setEditDone = editDone => {
+  return {
+    type: SET_EDIT_DONE,
+    payload: editDone
+  };
+};
+
+export const setCreateDone = createDone => {
+  return {
+    type: SET_CREATE_DONE,
+    payload: createDone
   };
 };
 
