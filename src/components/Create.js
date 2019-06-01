@@ -29,11 +29,55 @@ class Create extends Component {
       isTitleEmpty: true,
       isSubEmpty: true,
       isBodyEmpty: true,
-      isImageEmpty: true
+      isImageEmpty: true,
+      justCreated: [],
+      posts: [],
+      didRedirect: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios
+      .get("/posts")
+      .then(res => {
+        this.setState({ posts: res.data });
+      })
+      .catch(err => console.log(err));
+  }
+
+  componentDidUpdate() {
+    // Redirect to most recent post
+    if (this.state.didRedirect) {
+      this.setState({ didRedirect: false });
+
+      if (
+        this.state.justCreated !== undefined ||
+        this.state.justCreated !== null
+      ) {
+        this.state.posts.map(p => {
+          if (
+            p.accountId === this.props.auth.users &&
+            p !== undefined &&
+            p !== null
+          ) {
+            this.setState(
+              {
+                justCreated: this.state.justCreated.concat(
+                  this.state.justCreated.unshift(p.id)
+                )
+              },
+              () => console.log(this.state.justCreated)
+            );
+          }
+        });
+
+        // Redirects to the most recent post
+        this.props.history.push(`/show/${this.state.justCreated[0]}`);
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,6 +134,9 @@ class Create extends Component {
 
     // Set boolean that submit button was triggered
     this.setState({ didSubmit: true });
+
+    // Redirect to post just made
+    this.setState({ didRedirect: true });
 
     if (this.state.didFill) {
       // Getting data from HTMl fields
